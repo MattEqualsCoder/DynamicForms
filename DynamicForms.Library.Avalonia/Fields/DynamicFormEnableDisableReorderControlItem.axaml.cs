@@ -5,6 +5,11 @@ namespace DynamicForms.Library.Avalonia.Fields;
 
 public partial class DynamicFormEnableDisableReorderControlItem : UserControl
 {
+    public DynamicFormEnableDisableReorderControlItem() : this(true, "", true, true)
+    {
+        
+    }
+    
     public DynamicFormEnableDisableReorderControlItem(bool isOptionEnabled, string optionName, bool canMoveUp, bool canMoveDown)
     {
         IsOptionEnabled = isOptionEnabled;

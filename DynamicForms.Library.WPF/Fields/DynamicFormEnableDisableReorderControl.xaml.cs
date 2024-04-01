@@ -1,36 +1,28 @@
-using Avalonia.Controls;
-using DynamicData;
+﻿using System.Windows;
+using System.Windows.Controls;
 
-namespace DynamicForms.Library.Avalonia.Fields;
+namespace DynamicForms.Library.WPF.Fields;
 
 public partial class DynamicFormEnableDisableReorderControl : UserControl
 {
-    private readonly ListBox _listBox;
     private readonly bool _isArray;
     private readonly ICollection<string> _options;
     private ICollection<string> _selectedOptions;
-
-
-    public DynamicFormEnableDisableReorderControl() : this([], [])
-    {
-        
-    }
     
     public DynamicFormEnableDisableReorderControl(ICollection<string> options, ICollection<string> selectedOptions)
     {
         InitializeComponent();
-
+        
         if (selectedOptions is string[])
         {
             _isArray = true;
         }
-        
-        _listBox = this.Find<ListBox>(nameof(MainListBox))!;
+
         _options = options;
         _selectedOptions = selectedOptions;
         PopulateListBox();
     }
-
+    
     public object GetValue()
     {
         if (_isArray)
@@ -53,20 +45,21 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
 
     private void PopulateListBox()
     {
-        _listBox.Items.Clear();
+        MainListBox.Items.Clear();
 
         foreach (var item in _selectedOptions)
         {
             var itemControl = new DynamicFormEnableDisableReorderControlItem(true, item,
                 item != _selectedOptions.First(), item != _selectedOptions.Last());
-            _listBox.Items.Add(new ListBoxItem() { Content = itemControl});
+            itemControl.HorizontalAlignment = HorizontalAlignment.Stretch;
+            MainListBox.Items.Add(new ListBoxItem() { Content = itemControl, HorizontalContentAlignment = HorizontalAlignment.Stretch });
             itemControl.OnCheckChanged += ItemControlOnOnCheckChanged;
         }
         
         foreach (var item in _options.Where(x => !_selectedOptions.Contains(x)))
         {
             var itemControl = new DynamicFormEnableDisableReorderControlItem(false, item, false, false);
-            _listBox.Items.Add(new ListBoxItem() { Content = itemControl});
+            MainListBox.Items.Add(new ListBoxItem() { Content = itemControl, HorizontalContentAlignment = HorizontalAlignment.Stretch });
             itemControl.OnCheckChanged += ItemControlOnOnCheckChanged;
         }
     }
@@ -91,18 +84,22 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
         }
         else if (item.MoveUp)
         {
-            var index = _selectedOptions.IndexOf(item.OptionName) - 1;
-            var newList = _selectedOptions.Where(x => x != item.OptionName).ToList();
+            var newList = _selectedOptions.ToList();
+            var index = newList.IndexOf(item.OptionName) - 1;
+            newList.Remove(item.OptionName);
             newList.Insert(index, item.OptionName);
             _selectedOptions = newList;
         }
         else if (item.MoveDown)
         {
-            var index = _selectedOptions.IndexOf(item.OptionName) + 1;
-            var newList = _selectedOptions.Where(x => x != item.OptionName).ToList();
+            var newList = _selectedOptions.ToList();
+            var index = newList.IndexOf(item.OptionName) + 1;
+            newList.Remove(item.OptionName);
             newList.Insert(index, item.OptionName);
             _selectedOptions = newList;
         }
+        
+        Console.WriteLine(string.Join(", ", _selectedOptions));
         
         PopulateListBox();
         ValueUpdated?.Invoke(this, EventArgs.Empty);

@@ -2,11 +2,18 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using DynamicForms.Library.Core;
+using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Library.Avalonia.Fields;
 
 public partial class DynamicFormLabeledFieldVertical : DynamicFormLabeledField
 {
+    public DynamicFormLabeledFieldVertical() : this(new DynamicFormField("", "", null,
+        new DynamicFormFieldTextAttribute(), ""))
+    {
+        
+    }
+    
     public DynamicFormLabeledFieldVertical(DynamicFormField formField) : base(formField)
     {
         InitializeComponent();

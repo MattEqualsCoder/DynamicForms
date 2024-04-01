@@ -8,7 +8,12 @@ public partial class DynamicFormColorPicker : UserControl
 {
     private readonly TextBox _colorTextBox;
     private readonly TextBox _rectangleTextBox;
+
+    public DynamicFormColorPicker() : this([0, 0, 0, 0])
+    {
+    }
     
+
     public DynamicFormColorPicker(byte[] bytes)
     {
         InitializeComponent();

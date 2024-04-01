@@ -5,11 +5,17 @@ using Avalonia.Markup.Xaml;
 using AvaloniaControls.Controls;
 using DynamicForms.Library.Avalonia.Groups;
 using DynamicForms.Library.Core;
+using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Library.Avalonia.Fields;
 
 public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
 {
+    public DynamicFormLabeledFieldSideBySide() : this(new DynamicFormField("", "", null, new DynamicFormFieldTextAttribute(), ""))
+    {
+        
+    }
+    
     public DynamicFormLabeledFieldSideBySide(DynamicFormField formField) : base(formField)
     {
         InitializeComponent();

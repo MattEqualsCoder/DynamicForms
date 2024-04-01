@@ -1,12 +1,13 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
-using DynamicForms.Library.Avalonia.Groups;
+using System.Windows;
+using System.Windows.Controls;
 using DynamicForms.Library.Core;
+using DynamicForms.Library.WPF.Groups;
 
-namespace DynamicForms.Library.Avalonia;
+namespace DynamicForms.Library.WPF;
 
+/// <summary>
+/// Interaction logic for UserControl1.xaml
+/// </summary>
 public partial class DynamicFormControl : UserControl
 {
     private bool _loaded;
@@ -16,9 +17,14 @@ public partial class DynamicFormControl : UserControl
         InitializeComponent();
     }
     
-    public static readonly StyledProperty<object?> DataProperty = AvaloniaProperty.Register<DynamicFormControl, object?>(
-        nameof(Data));
-
+    public static readonly DependencyProperty DataProperty 
+        = DependencyProperty.Register( 
+            nameof(Data), 
+            typeof( object ), 
+            typeof( DynamicFormControl ), 
+            new PropertyMetadata( false ) 
+        );
+    
     public object? Data
     {
         get => GetValue(DataProperty);
@@ -28,8 +34,8 @@ public partial class DynamicFormControl : UserControl
             LoadDataObject();
         }
     }
-    
-    private void Control_OnLoaded(object? sender, RoutedEventArgs e)
+
+    private void DynamicFormControl_OnLoaded(object sender, RoutedEventArgs e)
     {
         if (_loaded)
         {
@@ -39,7 +45,7 @@ public partial class DynamicFormControl : UserControl
         LoadDataObject();
         _loaded = true;
     }
-
+    
     private void LoadDataObject()
     {
         if (Data == null)
@@ -48,13 +54,11 @@ public partial class DynamicFormControl : UserControl
         }
         var dynamicForm = new DynamicForm(Data);
 
-        var dockPanel = this.Find<DockPanel>(nameof(ParentPanel))!;
-
         var mainGroupControl = CreateFormGroup(dynamicForm.ParentGroup.GroupName, dynamicForm.ParentGroup.Style,
             dynamicForm.ParentGroup.Type,
             dynamicForm.ParentGroup.Objects);
 
-        dockPanel.Children.Add(mainGroupControl);
+        ParentPanel.Children.Add(mainGroupControl);
     }
 
     private Control CreateFormGroup(string groupName, DynamicFormGroupStyle style, DynamicFormGroupType type, List<DynamicFormObject> groupObjects)
@@ -69,9 +73,9 @@ public partial class DynamicFormControl : UserControl
             
         DynamicFormGroupTypeControl groupTypeControl = type switch
         {
-            DynamicFormGroupType.Vertical => new DynamicFormGroupTypeVertical(),
-            DynamicFormGroupType.TwoColumns => new DynamicFormGroupTypeTwoColumn(),
-            DynamicFormGroupType.SideBySide => new DynamicFormGroupTypeSideBySide(),
+            DynamicFormGroupType.Vertical => new DynamicFormGroupTypeControlVertical(),
+            DynamicFormGroupType.TwoColumns => new DynamicFormGroupTypeControlTwoColumn(),
+            DynamicFormGroupType.SideBySide => new DynamicFormGroupTypeControlSideBySide(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 

@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicForms.Library.Avalon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicForms.Example.Shared", "DynamicForms.Example.Shared\DynamicForms.Example.Shared.csproj", "{4CBB8B56-1262-4218-AD22-C04F3BE9837E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicForms.Library.WPF", "DynamicForms.Library.WPF\DynamicForms.Library.WPF.csproj", "{661A56C2-0104-4099-A688-8629493D3B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicForms.Example.WPF", "DynamicForms.Example.WPF\DynamicForms.Example.WPF.csproj", "{977ABBEE-E62E-4B6A-A383-0980D474FE2B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{4CBB8B56-1262-4218-AD22-C04F3BE9837E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CBB8B56-1262-4218-AD22-C04F3BE9837E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CBB8B56-1262-4218-AD22-C04F3BE9837E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{661A56C2-0104-4099-A688-8629493D3B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{661A56C2-0104-4099-A688-8629493D3B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{661A56C2-0104-4099-A688-8629493D3B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{661A56C2-0104-4099-A688-8629493D3B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{977ABBEE-E62E-4B6A-A383-0980D474FE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{977ABBEE-E62E-4B6A-A383-0980D474FE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{977ABBEE-E62E-4B6A-A383-0980D474FE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{977ABBEE-E62E-4B6A-A383-0980D474FE2B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

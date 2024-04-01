@@ -6,6 +6,11 @@ namespace DynamicForms.Library.Avalonia.Groups;
 public partial class DynamicFormGroupStyleExpander : DynamicFormGroupStyleControl
 {
     private ExpanderControl _expander;
+
+    public DynamicFormGroupStyleExpander() : this("")
+    {
+        
+    }
     
     public DynamicFormGroupStyleExpander(string groupName)
     {

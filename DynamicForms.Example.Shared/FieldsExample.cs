@@ -46,7 +46,9 @@ public class FieldsExample
     public string[] DynamicFormFieldEnableDisableReorderExample { get; set; } = ["Five", "Two", "One"];
     
     [DynamicFormFieldButton("View YAML")] 
+#pragma warning disable CS0067 // Event is never used
     public event EventHandler? ButtonPress;
+#pragma warning restore CS0067 // Event is never used
 
     [YamlIgnore]
     public string[] DynamicFormFieldComboBoxOptions => ["Option 1", "Option 2", "Option 3"];

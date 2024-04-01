@@ -1,0 +1,71 @@
+﻿<Window x:Class="DynamicForms.Example.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:DynamicForms.Library.WPF;assembly=DynamicForms.Library.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="800">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="Basic">
+                
+                <DockPanel>
+                    <TextBox 
+                        Margin="5" 
+                        DockPanel.Dock="Bottom" 
+                        Name="BasicTextBox" 
+                        IsReadOnly="True"
+                        Height="150"
+                    ></TextBox>
+                    <wpf:DynamicFormControl 
+                        Data="{Binding BasicExample}" 
+                        Margin="5" />    
+                    
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="Fields">
+                
+                <DockPanel Grid.IsSharedSizeScope="True">
+                    <TextBox 
+                        DockPanel.Dock="Bottom" 
+                        Height="150" 
+                        Margin="5" 
+                        Name="FieldsTextBox" 
+                        IsReadOnly="True"
+                    ></TextBox>
+                    <wpf:DynamicFormControl 
+                        Data="{Binding FieldsExample}" 
+                        Margin="5" />
+                    
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="Groups">
+                
+                <wpf:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding GroupsExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+            <TabItem Header="Child Objects">
+                
+                <wpf:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding ChildObjectExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+            <TabItem Header="Reordering">
+                
+                <wpf:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding ReorderExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

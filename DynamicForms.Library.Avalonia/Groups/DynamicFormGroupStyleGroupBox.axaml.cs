@@ -6,6 +6,11 @@ namespace DynamicForms.Library.Avalonia.Groups;
 public partial class DynamicFormGroupStyleGroupBox : DynamicFormGroupStyleControl
 {
     private CardControl _cardControl;
+
+    public DynamicFormGroupStyleGroupBox() : this("")
+    {
+        
+    }
     
     public DynamicFormGroupStyleGroupBox(string groupName)
     {
