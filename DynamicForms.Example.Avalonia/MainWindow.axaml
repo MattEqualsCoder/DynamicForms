@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:DynamicForms.Example.Avalonia.ViewModels"
+        xmlns:avalonia="clr-namespace:DynamicForms.Library.Avalonia;assembly=DynamicForms.Library.Avalonia"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DynamicForms.Example.Avalonia.MainWindow"
+        Width="800" Height="800"
+        Title="DynamicForms.Example.Avalonia"
+        x:DataType="viewModels:MainWindowViewModel">
+    <DockPanel>
+        <TabControl>
+            <TabItem Header="Basic">
+                
+                <DockPanel>
+                    <TextBox 
+                        Margin="5" 
+                        DockPanel.Dock="Bottom" 
+                        Name="BasicTextBox" 
+                        IsReadOnly="True"
+                        Height="150"
+                    ></TextBox>
+                    <avalonia:DynamicFormControl 
+                        Data="{Binding BasicExample}" 
+                        Margin="5" />    
+                    
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="Fields">
+                
+                <DockPanel Grid.IsSharedSizeScope="True">
+                    <TextBox 
+                        DockPanel.Dock="Bottom" 
+                        Height="150" 
+                        Margin="5" 
+                        Name="FieldsTextBox" 
+                        IsReadOnly="True"
+                    ></TextBox>
+                    <avalonia:DynamicFormControl 
+                        Data="{Binding FieldsExample}" 
+                        Margin="5" />
+                    
+                </DockPanel>
+                
+            </TabItem>
+            <TabItem Header="Groups">
+                
+                <avalonia:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding GroupsExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+            <TabItem Header="Child Objects">
+                
+                <avalonia:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding ChildObjectExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+            <TabItem Header="Reordering">
+                
+                <avalonia:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding ReorderExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>

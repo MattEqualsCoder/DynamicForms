@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>MattEqualsCoder.DynamicForms.Avalonia</PackageId>
+        <Version>0.1.0</Version>
+        <Authors>MattEqualsCoder</Authors>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="0.9.12" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\DynamicForms.Library.Core\DynamicForms.Library.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Groups\DynamicFormGroupStyleExpander.axaml.cs">
+        <DependentUpon>DynamicFormGroupStyleExpander.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Groups\DynamicFormGroupStyleGroupBox.axaml.cs">
+        <DependentUpon>DynamicFormGroupStyleGroupBox.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Fields\DynamicFormEnableDisableReorderControlItem.axaml.cs">
+        <DependentUpon>DynamicFormEnableDisableReorderControlItem.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+</Project>
