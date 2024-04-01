@@ -254,18 +254,11 @@ public class DynamicFormLabeledField : UserControl
             incrementAmount = Math.Pow(0.1, decimalPlaces);
         }
         
-        var control = new DynamicFormSliderControl(formField.Value as double? ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix);
+        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix);
         
         control.ValueChanged += (sender, args) =>
         {
-            if (decimalPlaces == 0)
-            {
-                formField.SetValue(formField.ParentObject, Convert.ToInt32(args.NewValue));
-            }
-            else
-            {
-                formField.SetValue(formField.ParentObject, Convert.ToDouble(args.NewValue));
-            }
+            formField.SetValue(formField.ParentObject, control.GetValue());
         };
         
         if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
@@ -379,6 +372,10 @@ public class DynamicFormLabeledField : UserControl
             else if (formField.Value is double)
             {
                 formField.SetValue(formField.ParentObject, Convert.ToDouble(control.Value));
+            }
+            else if (formField.Value is float)
+            {
+                formField.SetValue(formField.ParentObject, (float)Convert.ToDouble(control.Value));
             }
             else
             {

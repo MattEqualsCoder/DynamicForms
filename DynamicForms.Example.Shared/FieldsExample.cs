@@ -30,6 +30,12 @@ public class FieldsExample
     [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (double)")]
     public double DynamicFormFieldDoubleSlider { get; set; } = 1;
     
+    [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (float)")]
+    public float DynamicFormFieldFloatSlider { get; set; } = 1;
+    
+    [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (decimal)")]
+    public decimal DynamicFormFieldDecimalSlider { get; set; } = 1;
+    
     [DynamicFormFieldColorPicker("DynamicFormFieldColorPicker")]
     public byte[] DynamicFormFieldColorPickerExample { get; set; } = [0xFF, 0x21, 0x21, 0x21];
     
@@ -39,8 +45,17 @@ public class FieldsExample
     [DynamicFormFieldFilePicker(FilePickerType.Folder)]
     public string DynamicFormFieldFilePickerFolderExample { get; set; } = "";
     
-    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDown")]
+    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExample")]
     public int DynamicFormFieldNumericUpDownExample { get; set; }
+    
+    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleDouble")]
+    public double DynamicFormFieldNumericUpDownExampleDouble { get; set; }
+    
+    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleFloat")]
+    public float DynamicFormFieldNumericUpDownExampleFloat { get; set; }
+    
+    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleDecimal")]
+    public decimal DynamicFormFieldNumericUpDownExampleDecimal { get; set; }
     
     [DynamicFormFieldEnableDisableReorder(nameof(DynamicFormFieldEnableDisableReorderOptions), "DynamicFormFieldEnableDisableReorder")]
     public string[] DynamicFormFieldEnableDisableReorderExample { get; set; } = ["Five", "Two", "One"];

@@ -10,7 +10,8 @@ namespace DynamicForms.Library.Core.Attributes;
 /// <param name="groupName">The group the field should be on</param>
 /// <param name="order">The order to show the field in</param>
 [AttributeUsage((AttributeTargets.Property))]
-public class DynamicFormFieldTextBoxAttribute(
+public class DynamicFormFieldTextBoxAttribute
+(
     string labelText = "",
     string? toolTipText = null,
     string? visibleWhenProperty = null,
