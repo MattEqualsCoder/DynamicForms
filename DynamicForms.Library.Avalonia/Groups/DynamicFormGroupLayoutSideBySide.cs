@@ -2,7 +2,7 @@ using DynamicForms.Library.Core;
 
 namespace DynamicForms.Library.Avalonia.Groups;
 
-public class DynamicFormGroupTypeSideBySide : DynamicFormGroupTypeVertical
+public class DynamicFormGroupLayoutSideBySide : DynamicFormGroupLayoutVertical
 {
     public override void AddField(DynamicFormField field)
     {

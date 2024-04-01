@@ -69,6 +69,16 @@
                     Margin="5" />
                 
             </TabItem>
+            
+            <TabItem Header="Dependencies">
+                
+                <avalonia:DynamicFormControl 
+                    Grid.IsSharedSizeScope="True"
+                    Data="{Binding DependencyExample}" 
+                    Margin="5" />
+                
+            </TabItem>
+            
         </TabControl>
     </DockPanel>
 </Window>

@@ -3,7 +3,7 @@ using DynamicForms.Library.WPF.Fields;
 
 namespace DynamicForms.Library.WPF.Groups;
 
-public class DynamicFormGroupTypeControlSideBySide : DynamicFormGroupTypeControlVertical
+public class DynamicFormGroupLayoutControlSideBySide : DynamicFormGroupLayoutControlVertical
 {
     public override void AddField(DynamicFormField field)
     {

@@ -57,7 +57,7 @@ public partial class DynamicFormControl : UserControl
         dockPanel.Children.Add(mainGroupControl);
     }
 
-    private Control CreateFormGroup(string groupName, DynamicFormGroupStyle style, DynamicFormGroupType type, List<DynamicFormObject> groupObjects)
+    private Control CreateFormGroup(string groupName, DynamicFormGroupStyle style, DynamicFormLayout type, List<DynamicFormObject> groupObjects)
     {
         DynamicFormGroupStyleControl groupStyleControl = style switch
         {
@@ -67,11 +67,11 @@ public partial class DynamicFormControl : UserControl
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
             
-        DynamicFormGroupTypeControl groupTypeControl = type switch
+        DynamicFormGroupLayoutControl groupLayoutControl = type switch
         {
-            DynamicFormGroupType.Vertical => new DynamicFormGroupTypeVertical(),
-            DynamicFormGroupType.TwoColumns => new DynamicFormGroupTypeTwoColumn(),
-            DynamicFormGroupType.SideBySide => new DynamicFormGroupTypeSideBySide(),
+            DynamicFormLayout.Vertical => new DynamicFormGroupLayoutVertical(),
+            DynamicFormLayout.TwoColumns => new DynamicFormGroupLayoutTwoColumn(),
+            DynamicFormLayout.SideBySide => new DynamicFormGroupLayoutSideBySide(),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 
@@ -81,7 +81,7 @@ public partial class DynamicFormControl : UserControl
         {
             if (formObject is DynamicFormField field)
             {
-                groupTypeControl.AddField(field);
+                groupLayoutControl.AddField(field);
             }
             else if (formObject is DynamicFormGroup group)
             {
@@ -90,7 +90,7 @@ public partial class DynamicFormControl : UserControl
                 {
                     subGroupControl.Margin = new Thickness(0, 0, 0, 5);
                 }
-                groupTypeControl.AddControl(subGroupControl);
+                groupLayoutControl.AddControl(subGroupControl);
             }
             else
             {
@@ -98,7 +98,7 @@ public partial class DynamicFormControl : UserControl
             }
         }
         
-        groupStyleControl.AddBody(groupTypeControl);
+        groupStyleControl.AddBody(groupLayoutControl);
 
         return groupStyleControl;
     }

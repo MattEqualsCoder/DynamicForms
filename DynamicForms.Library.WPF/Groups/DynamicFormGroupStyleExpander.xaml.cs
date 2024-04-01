@@ -10,8 +10,8 @@ public partial class DynamicFormGroupStyleExpander : DynamicFormGroupStyleContro
         Expander.Header = groupName;
     }
 
-    public override void AddBody(DynamicFormGroupTypeControl typeControl)
+    public override void AddBody(DynamicFormGroupLayoutControl layoutControl)
     {
-        MainPanel.Children.Add(typeControl);
+        MainPanel.Children.Add(layoutControl);
     }
 }

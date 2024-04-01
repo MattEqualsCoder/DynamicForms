@@ -4,7 +4,7 @@ using YamlDotNet.Serialization;
 
 namespace DynamicForms.Example.Shared;
 
-[DynamicFormGroupBasic(DynamicFormGroupType.SideBySide)]
+[DynamicFormGroupBasic(DynamicFormLayout.SideBySide)]
 public class FieldsExample
 {
     [DynamicFormFieldTextBox("DynamicFormFieldTextBox")]
@@ -17,17 +17,17 @@ public class FieldsExample
     [DynamicFormFieldCheckBox("DynamicFormCheckBox", "DynamicFormCheckBox (label)")]
     public bool DynamicFormFieldCheckBoxExample { get; set; }
 
-    [DynamicFormFieldComboBox("DynamicFormFieldComboBox (string)",
-        comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxOptions))]
+    [DynamicFormFieldComboBox(comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxOptions), 
+        labelText: "DynamicFormFieldComboBox (string)")]
     public string DynamicFormFieldComboBoxStringExample { get; set; } = "Option 1";
     
     [DynamicFormFieldComboBox("DynamicFormFieldComboBox (enum)")]
     public EnumOptionExamples DynamicFormFieldComboBoxEnumExample { get; set; }
     
-    [DynamicFormFieldSlider(1, 10, "DynamicFormFieldSlider (int)")]
+    [DynamicFormFieldSlider(1, 10, labelText: "DynamicFormFieldSlider (int)")]
     public int DynamicFormFieldSliderIntExample { get; set; } = 1;
     
-    [DynamicFormFieldSlider(0, 100, "DynamicFormFieldSlider (double)", decimalPlaces: 2, incrementAmount: 0.25, suffix: "%")]
+    [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (double)")]
     public double DynamicFormFieldDoubleSlider { get; set; } = 1;
     
     [DynamicFormFieldColorPicker("DynamicFormFieldColorPicker")]

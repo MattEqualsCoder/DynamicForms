@@ -2,7 +2,7 @@ namespace DynamicForms.Library.Core.Attributes;
 
 public abstract class DynamicFormFieldAttribute(
     string labelText,
-    string? hintText = null,
+    string? toolTipText = null,
     string? visibleWhenProperty = null,
     string? editableWhenProperty = null,
     string groupName = "",
@@ -12,7 +12,7 @@ public abstract class DynamicFormFieldAttribute(
     public abstract DynamicFormFieldType FieldType { get; }
     
     public string LabelText { get; } = labelText;
-    public string? HintText { get; } = hintText;
+    public string? ToolTipText { get; } = toolTipText;
     public string? VisibleWhenProperty { get; } = visibleWhenProperty;
     public string? EditableWhenProperty { get; } = editableWhenProperty;
 }

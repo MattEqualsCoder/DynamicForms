@@ -19,8 +19,8 @@ public partial class DynamicFormGroupStyleGroupBox : DynamicFormGroupStyleContro
         _cardControl.HeaderText = groupName;
     }
 
-    public override void AddBody(DynamicFormGroupTypeControl typeControl)
+    public override void AddBody(DynamicFormGroupLayoutControl layoutControl)
     {
-        _cardControl.Content = typeControl;
+        _cardControl.Content = layoutControl;
     }
 }

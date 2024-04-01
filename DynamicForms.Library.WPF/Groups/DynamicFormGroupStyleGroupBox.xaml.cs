@@ -10,8 +10,8 @@ public partial class DynamicFormGroupStyleGroupBox : DynamicFormGroupStyleContro
         MainPanel.Header = groupName;
     }
 
-    public override void AddBody(DynamicFormGroupTypeControl typeControl)
+    public override void AddBody(DynamicFormGroupLayoutControl layoutControl)
     {
-        MainPanel.Content = typeControl;
+        MainPanel.Content = layoutControl;
     }
 }

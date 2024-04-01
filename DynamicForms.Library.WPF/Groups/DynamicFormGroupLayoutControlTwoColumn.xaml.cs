@@ -5,9 +5,9 @@ using DynamicForms.Library.WPF.Fields;
 
 namespace DynamicForms.Library.WPF.Groups;
 
-public partial class DynamicFormGroupTypeControlTwoColumn : DynamicFormGroupTypeControl
+public partial class DynamicFormGroupLayoutControlTwoColumn : DynamicFormGroupLayoutControl
 {
-    public DynamicFormGroupTypeControlTwoColumn()
+    public DynamicFormGroupLayoutControlTwoColumn()
     {
         InitializeComponent();
     }

@@ -1,9 +1,9 @@
-﻿using System.Windows.Controls;
+using Avalonia.Controls;
 using DynamicForms.Library.Core;
 
-namespace DynamicForms.Library.WPF.Groups;
+namespace DynamicForms.Library.Avalonia.Groups;
 
-public abstract class DynamicFormGroupTypeControl : UserControl
+public abstract class DynamicFormGroupLayoutControl : UserControl
 {
     public abstract void AddField(DynamicFormField field);
 

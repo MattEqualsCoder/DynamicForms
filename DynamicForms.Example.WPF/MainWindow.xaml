@@ -18,9 +18,9 @@
                         IsReadOnly="True"
                         Height="150"
                     ></TextBox>
-                    <wpf:DynamicFormControl 
-                        Data="{Binding BasicExample}" 
-                        Margin="5" />    
+    <wpf:DynamicFormControl 
+        Data="{Binding BasicExample}" 
+        Margin="5" />    
                     
                 </DockPanel>
                 

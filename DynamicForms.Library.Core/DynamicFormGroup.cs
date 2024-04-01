@@ -7,7 +7,7 @@ public class DynamicFormGroup : DynamicFormObject
 {
     public DynamicFormGroup(object value, string parentGroupName)
     {
-        var attribute = new DynamicFormGroupBasicAttribute(DynamicFormGroupType.Vertical);
+        var attribute = new DynamicFormGroupBasicAttribute(DynamicFormLayout.Vertical);
         Value = value;
         GroupName = attribute.Name;
         ParentGroupName = parentGroupName;
@@ -17,7 +17,7 @@ public class DynamicFormGroup : DynamicFormObject
         AddFormObjects(value);
     }
     
-    public DynamicFormGroup(object value, string groupName, string parentGroupName, DynamicFormGroupStyle style, DynamicFormGroupType type)
+    public DynamicFormGroup(object value, string groupName, string parentGroupName, DynamicFormGroupStyle style, DynamicFormLayout type)
     {
         Value = value;
         GroupName = groupName;
@@ -28,7 +28,7 @@ public class DynamicFormGroup : DynamicFormObject
     
     public string GroupName { get; init; }
     public DynamicFormGroupStyle Style { get; init; }
-    public DynamicFormGroupType Type { get; init; }
+    public DynamicFormLayout Type { get; init; }
     public override bool IsGroup => true;
     public override string ParentGroupName { get; }
 

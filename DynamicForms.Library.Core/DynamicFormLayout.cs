@@ -1,6 +1,6 @@
 namespace DynamicForms.Library.Core;
 
-public enum DynamicFormGroupType
+public enum DynamicFormLayout
 {
     Vertical,
     TwoColumns,

@@ -19,8 +19,8 @@ public partial class DynamicFormGroupStyleExpander : DynamicFormGroupStyleContro
         _expander.HeaderText = groupName;
     }
 
-    public override void AddBody(DynamicFormGroupTypeControl typeControl)
+    public override void AddBody(DynamicFormGroupLayoutControl layoutControl)
     {
-        _expander.Content = typeControl;
+        _expander.Content = layoutControl;
     }
 }

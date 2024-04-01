@@ -9,8 +9,8 @@ public partial class DynamicFormGroupStyleBasic : DynamicFormGroupStyleControl
         InitializeComponent();
     }
 
-    public override void AddBody(DynamicFormGroupTypeControl typeControl)
+    public override void AddBody(DynamicFormGroupLayoutControl layoutControl)
     {
-        MainPanel.Children.Add(typeControl);
+        MainPanel.Children.Add(layoutControl);
     }
 }

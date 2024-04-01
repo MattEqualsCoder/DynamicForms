@@ -13,4 +13,6 @@ public class MainWindowViewModel : ViewModelBase
     public ChildObjectExample ChildObjectExample { get; set; } = new();
     
     public ReorderExample ReorderExample { get; set; } = new();
+    
+    public DependencyExample DependencyExample { get; set; } = new();
 }

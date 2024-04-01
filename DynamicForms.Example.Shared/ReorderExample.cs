@@ -3,8 +3,8 @@ using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Example.Shared;
 
-[DynamicFormGroupGroupBox(DynamicFormGroupType.Vertical, "Second group", order: 2)]
-[DynamicFormGroupGroupBox(DynamicFormGroupType.Vertical, "First group", order: 1)]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Second group", order: 2)]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "First group", order: 1)]
 public class ReorderExample
 {
     [DynamicFormFieldText(order: 2)] 

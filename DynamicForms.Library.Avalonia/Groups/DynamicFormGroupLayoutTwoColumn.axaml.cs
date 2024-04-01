@@ -4,11 +4,11 @@ using DynamicForms.Library.Core;
 
 namespace DynamicForms.Library.Avalonia.Groups;
 
-public partial class DynamicFormGroupTypeTwoColumn : DynamicFormGroupTypeControl
+public partial class DynamicFormGroupLayoutTwoColumn : DynamicFormGroupLayoutControl
 {
     private Grid _mainGrid;
     
-    public DynamicFormGroupTypeTwoColumn()
+    public DynamicFormGroupLayoutTwoColumn()
     {
         InitializeComponent();
         _mainGrid = this.Find<Grid>(nameof(MainGrid))!;

@@ -24,7 +24,7 @@ public class ChildObjectOtherObject
     public string ChildObjectTextBox { get; set; } = "";
 }
 
-[DynamicFormGroupGroupBox(DynamicFormGroupType.Vertical, "Child Object with Groups")]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Child Object with Groups")]
 public class ChildObjectOtherObjectGroups
 {
     [DynamicFormFieldText]

@@ -5,11 +5,11 @@ using DynamicForms.Library.Core;
 
 namespace DynamicForms.Library.Avalonia.Groups;
 
-public partial class DynamicFormGroupTypeVertical : DynamicFormGroupTypeControl
+public partial class DynamicFormGroupLayoutVertical : DynamicFormGroupLayoutControl
 {
     private StackPanel _mainPanel;
     
-    public DynamicFormGroupTypeVertical()
+    public DynamicFormGroupLayoutVertical()
     {
         InitializeComponent();
         _mainPanel = this.Find<StackPanel>(nameof(MainPanel))!;

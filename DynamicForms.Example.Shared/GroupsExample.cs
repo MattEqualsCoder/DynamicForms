@@ -3,12 +3,12 @@ using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Example.Shared;
 
-[DynamicFormGroupBasic(DynamicFormGroupType.Vertical, "Basic (name not displayed)")]
-[DynamicFormGroupGroupBox(DynamicFormGroupType.SideBySide, "Group Box with Side-By-Side Type")]
-[DynamicFormGroupExpander(DynamicFormGroupType.TwoColumns, "Expander with Two Columns Type")]
-[DynamicFormGroupExpander(DynamicFormGroupType.TwoColumns, "Expander with Child Groups")]
-[DynamicFormGroupGroupBox(DynamicFormGroupType.Vertical, "Left Box", parentGroup: "Expander with Child Groups")]
-[DynamicFormGroupGroupBox(DynamicFormGroupType.Vertical, "Right Box", parentGroup: "Expander with Child Groups")]
+[DynamicFormGroupBasic(DynamicFormLayout.Vertical, "Basic (name not displayed)")]
+[DynamicFormGroupGroupBox(DynamicFormLayout.SideBySide, "Group Box with Side-By-Side Type")]
+[DynamicFormGroupExpander(DynamicFormLayout.TwoColumns, "Expander with Two Columns Type")]
+[DynamicFormGroupExpander(DynamicFormLayout.TwoColumns, "Expander with Child Groups")]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Left Box", parentGroup: "Expander with Child Groups")]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Right Box", parentGroup: "Expander with Child Groups")]
 public class GroupsExample
 {
     [DynamicFormFieldText(labelText: "Basic Text")]

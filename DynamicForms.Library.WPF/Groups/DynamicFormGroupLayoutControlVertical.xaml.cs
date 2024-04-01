@@ -4,9 +4,9 @@ using DynamicForms.Library.WPF.Fields;
 
 namespace DynamicForms.Library.WPF.Groups;
 
-public partial class DynamicFormGroupTypeControlVertical : DynamicFormGroupTypeControl
+public partial class DynamicFormGroupLayoutControlVertical : DynamicFormGroupLayoutControl
 {
-    public DynamicFormGroupTypeControlVertical()
+    public DynamicFormGroupLayoutControlVertical()
     {
         InitializeComponent();
     }

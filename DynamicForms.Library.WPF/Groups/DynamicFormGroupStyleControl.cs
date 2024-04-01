@@ -4,5 +4,5 @@ namespace DynamicForms.Library.WPF.Groups;
 
 public abstract class DynamicFormGroupStyleControl : UserControl
 {
-    public abstract void AddBody(DynamicFormGroupTypeControl typeControl);
+    public abstract void AddBody(DynamicFormGroupLayoutControl layoutControl);
 }
