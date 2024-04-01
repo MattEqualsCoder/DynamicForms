@@ -16,7 +16,9 @@ public class BasicExample
     public string ComboBoxOne { get; set; } = "Test 3";
 
     [DynamicFormFieldButton(buttonText: "View YAML")]
+#pragma warning disable CS0067 // Event is never used
     public event EventHandler? ButtonPress;
+#pragma warning restore CS0067 // Event is never used
 
     public string[] ComboBoxOptions => ["Test 1", "Test 2", "Test 3"];
 }

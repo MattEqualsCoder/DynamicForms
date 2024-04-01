@@ -6,8 +6,8 @@ namespace DynamicForms.Example.Shared;
 
 public class DependencyExample : INotifyPropertyChanged
 {
-    private bool _checkBoxOne;
-    private bool _checkBoxTwo;
+    private bool _checkBoxOne = true;
+    private bool _checkBoxTwo = true;
     
     [DynamicFormFieldText]
     public string DependencyExampleText =>
@@ -23,7 +23,7 @@ public class DependencyExample : INotifyPropertyChanged
     [DynamicFormFieldTextBox(labelText: "First Text Box", visibleWhenProperty: nameof(CheckBoxOne))]
     public string TextBoxOne { get; set; } = "";
     
-    [DynamicFormFieldCheckBox(checkBoxText: "Make first text box editable")]
+    [DynamicFormFieldCheckBox(checkBoxText: "Make second text box editable")]
     public bool CheckBoxTwo
     {
         get => _checkBoxTwo;
