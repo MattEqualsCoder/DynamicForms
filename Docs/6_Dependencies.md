@@ -17,8 +17,25 @@ public class DependencyExample : INotifyPropertyChanged
 
     [DynamicFormFieldTextBox(labelText: "Text Box", visibleWhenProperty: nameof(CheckBox))]
     public string TextBox { get; set; } = "";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
 }
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/8498dcf5-27d7-4fcf-99c5-b53cee1920ca)
 
 ## Changing Editable
 ```
@@ -35,5 +52,22 @@ public class DependencyExample : INotifyPropertyChanged
 
     [DynamicFormFieldTextBox(labelText: "Text Box", editableWhenProperty: nameof(CheckBox))]
     public string TextBox { get; set; } = "";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
 }
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/d19adde4-c43f-4d95-86f5-7bc2c9bcb522)
