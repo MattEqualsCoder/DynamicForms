@@ -8,6 +8,7 @@ public partial class DynamicFormNumericUpDown : UserControl
 {
     private bool _isInt;
     private bool _isDouble;
+    private bool _isFloat;
     private double _increment = 1;
     private double _minValue = int.MinValue;
     private double _maxValue = int.MaxValue;
@@ -27,6 +28,10 @@ public partial class DynamicFormNumericUpDown : UserControl
         {
             _isDouble = true;
         }
+        else if (value is float)
+        {
+            _isFloat = true;
+        }
         
         InitializeComponent();
         SetValue(value);
@@ -37,6 +42,8 @@ public partial class DynamicFormNumericUpDown : UserControl
     public int IntValue => (int)Value;
     
     public double DoubleValue => (double)Value;
+    
+    public float FloatValue => (float)Value;
     
     public decimal DecimalValue => (decimal)Value;
 
@@ -49,6 +56,10 @@ public partial class DynamicFormNumericUpDown : UserControl
         else if (_isDouble)
         {
             Value = Math.Clamp(Convert.ToDouble(value), _minValue, _maxValue);
+        }
+        else if (_isFloat)
+        {
+            Value = (float)Math.Clamp(Convert.ToDouble(value), _minValue, _maxValue);
         }
         else
         {
@@ -69,6 +80,10 @@ public partial class DynamicFormNumericUpDown : UserControl
         {
             SetValue(DoubleValue + _increment);
         }
+        else if (_isFloat)
+        {
+            SetValue(FloatValue + _increment);
+        }
         else
         {
             SetValue(DecimalValue + Convert.ToDecimal(_increment));
@@ -84,6 +99,10 @@ public partial class DynamicFormNumericUpDown : UserControl
         else if (_isDouble)
         {
             SetValue(DoubleValue - _increment);
+        }
+        else if (_isFloat)
+        {
+            SetValue(FloatValue - _increment);
         }
         else
         {

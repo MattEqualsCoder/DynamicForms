@@ -7,10 +7,17 @@ namespace DynamicForms.Library.WPF.Fields;
 public partial class DynamicFormSliderControl : UserControl
 {
     private readonly string _suffix;
+    private readonly bool _isInt;
+    private readonly bool _isDecimal;
+    private readonly bool _isFloat;
     
-    public DynamicFormSliderControl(double currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix)
+    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix)
     {
         _suffix = suffix;
+        
+        _isInt = currentValue is int;
+        _isDecimal = currentValue is decimal;
+        _isFloat = currentValue is float;
         
         InitializeComponent();
 
@@ -18,10 +25,10 @@ public partial class DynamicFormSliderControl : UserControl
         slider.Maximum = maximum;
         slider.Minimum = minimum;
         slider.TickFrequency = incrementAmount;
-        slider.Value = currentValue;
+        slider.Value = Convert.ToDouble(currentValue);
 
         var textBox = ValueTextBox;
-        textBox.Text = currentValue.ToString(CultureInfo.CurrentCulture) + _suffix;
+        textBox.Text = slider.Value.ToString(CultureInfo.CurrentCulture) + _suffix;
 
         slider.ValueChanged += (sender, args) =>
         {
@@ -45,6 +52,24 @@ public partial class DynamicFormSliderControl : UserControl
         ValueSlider.Value = value;
         ValueTextBox.Text =
             value.ToString(CultureInfo.CurrentCulture) + _suffix;
+    }
+    
+    public object GetValue()
+    {
+        if (_isInt)
+        {
+            return Convert.ToInt32(ValueSlider.Value);
+        }
+        else if (_isDecimal)
+        {
+            return Convert.ToDecimal(ValueSlider.Value);
+        }
+        else if (_isFloat)
+        {
+            return (float)ValueSlider.Value;
+        }
+
+        return ValueSlider.Value;
     }
 
     public event EventHandler<RoutedPropertyChangedEventArgs<double>>? ValueChanged;
