@@ -20,8 +20,10 @@ Then, when you're creating properties for fields in the form, you can set the gr
 public string BasicTextOne => "Text that will display in group one";
 
 [DynamicFormFieldText(labelText: "Basic Text Box Two", groupName: "Group two")]
-public string BasicTextOne => "Text that will display in group two";
+public string BasicTextTwo => "Text that will display in group two";
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/9e28a11a-b68a-413f-929a-8abf18d81884)
 
 ## Group Types
 There are different types of groups that can be used that affect the style of the group.
@@ -36,16 +38,18 @@ There are different types of groups that can be used that affect the style of th
 [DynamicFormGroupExpander(DynamicFormLayout.Vertical, "Group Three")]
 public class GroupsExample
 {
-    [DynamicFormFieldText(groupName: "Group One)]
+    [DynamicFormFieldText(groupName: "Group One")]
     public string BasicText => "This is a basic group.";
 
-    [DynamicFormFieldText(groupName: "Group Two)]
+    [DynamicFormFieldText(groupName: "Group Two")]
     public string GroupBoxText => "This is a group box group.";
 
-    [DynamicFormFieldText(groupName: "Group Three)]
+    [DynamicFormFieldText(groupName: "Group Three")]
     public string ExpanderText => "This is an expander group.";
 }
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/6eb5d100-31a7-4169-8a03-16f59f4434dd)
 
 ## Group Layouts
 There are also different layouts that affect the structure of the fields within a group.
@@ -84,6 +88,8 @@ public class GroupsExample
 <control:DynamicFormControl Grid.IsSharedSizeScope="True" Data="{Binding}" Margin="5" />
 ```
 
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/269d5e4d-acce-46fa-8719-1acdffdb961f)
+
 ## Subgroups
 Groups can be placed within other groups by setting the parentGroup attribute parameter.
 
@@ -93,10 +99,12 @@ Groups can be placed within other groups by setting the parentGroup attribute pa
 [DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Right Box", parentGroup: "Parent Group")]
 public class GroupsExample
 {
-    [DynamicFormFieldTextBox(labelText: "Right Text Box",groupName: "Left Box")]
-    public string LeftTextBox { get; set; } = "Groups can actually exist within another group by specifying the parentGroup attribute parameter.";
+    [DynamicFormFieldTextBox(labelText: "Left Text Box",groupName: "Left Box")]
+    public string LeftTextBox { get; set; } = "";
     
-    [DynamicFormFieldTextBox(labelText: "Left Text Box", groupName: "Right Box")]
+    [DynamicFormFieldTextBox(labelText: "Right Text Box", groupName: "Right Box")]
     public string RightTextBox { get; set; } = "";
 }
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/1fa5ca14-68a4-4c16-92f1-e68316bfccab)
