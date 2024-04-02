@@ -18,6 +18,8 @@ public class ChildObjectExample
 }
 ```
 
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/02aed944-1e19-4851-b221-7ca74143015e)
+
 You can also specify groups for the class that's used as a child object.
 
 ```
@@ -34,3 +36,5 @@ public class ChildObjectExample
     public ChildObjectOtherObjectGroups ChildObjectOtherObjectGroups { get; set; } = new();
 }
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/1324697b-b41e-4ba2-8e21-af7334ceb2fc)
