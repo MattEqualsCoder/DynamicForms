@@ -9,7 +9,7 @@ public class DependencyExample : INotifyPropertyChanged
 {
     private bool _checkBoxOne = true;
     private bool _checkBoxTwo = true;
-    private string _textBoxThree = "";
+    private string _nameTextBox = "";
     
     [DynamicFormFieldText]
     public string DependencyExampleText =>
@@ -35,14 +35,14 @@ public class DependencyExample : INotifyPropertyChanged
     [DynamicFormFieldTextBox(labelText: "Second Text Box", editableWhenTrue: nameof(CheckBoxTwo))]
     public string TextBoxTwo { get; set; } = "";
 
-    [DynamicFormFieldTextBox(labelText: "Third Text Box")]
-    public string TextBoxThree
+    [DynamicFormFieldTextBox(labelText: "Enter a Name")]
+    public string NameTextBox
     {
-        get => _textBoxThree;
-        set => SetField(ref _textBoxThree, value);
+        get => _nameTextBox;
+        set => SetField(ref _nameTextBox, value);
     }
 
-    [DynamicFormFieldButton("Button")]
+    [DynamicFormFieldButton("Submit Name")]
     public DependencyCommand DependencyCommand => new DependencyCommand();
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -70,7 +70,7 @@ public class DependencyCommand : ICommand
             return false;
         }
 
-        return !string.IsNullOrEmpty(example.TextBoxThree);
+        return !string.IsNullOrEmpty(example.NameTextBox);
     }
 
     public void Execute(object? parameter)
@@ -80,7 +80,7 @@ public class DependencyCommand : ICommand
             return;
         }
 
-        example.TextBoxThree = "";
+        example.NameTextBox = "";
     }
 
     public event EventHandler? CanExecuteChanged;
