@@ -3,8 +3,8 @@ namespace DynamicForms.Library.Core.Attributes;
 public abstract class DynamicFormFieldAttribute(
     string labelText,
     string? toolTipText = null,
-    string? visibleWhenProperty = null,
-    string? editableWhenProperty = null,
+    string? visibleWhenTrue = null,
+    string? editableWhenTrue = null,
     string groupName = "",
     int order = int.MaxValue)
     : DynamicFormObjectAttribute(groupName, order)
@@ -15,6 +15,6 @@ public abstract class DynamicFormFieldAttribute(
     
     public string LabelText { get; } = labelText;
     public string? ToolTipText { get; } = toolTipText;
-    public string? VisibleWhenProperty { get; } = visibleWhenProperty;
-    public string? EditableWhenProperty { get; } = editableWhenProperty;
+    public string? VisibleWhenTrue { get; } = visibleWhenTrue;
+    public string? EditableWhenTrue { get; } = editableWhenTrue;
 }

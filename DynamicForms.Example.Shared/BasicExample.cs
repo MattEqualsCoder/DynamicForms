@@ -9,7 +9,7 @@ public class BasicExample
     public string BasicExampleText =>
         "DynamicForms allows you to use property and event attributes to build a form dynamically for both WPF and Avalonia.";
     
-    [DynamicFormFieldTextBox(labelText: "Basic Text Box")]
+    [DynamicFormFieldTextBox(labelText: "Basic Text Box", toolTipText: "This is a test ToolTip")]
     public string TextBoxOne { get; set; } = "";
 
     [DynamicFormFieldComboBox(labelText: "Basic Combo Box", comboBoxOptionsProperty: nameof(ComboBoxOptions))]

@@ -22,6 +22,8 @@ public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
         
         var labeledControl = this.Find<LabeledControl>(nameof(MainControl))!;
         labeledControl.Text = formField.Attributes.LabelText;
+        
+        ToolTip.SetTip(labeledControl, formField.Attributes.ToolTipText);
 
         if (formField.Type is DynamicFormFieldType.Button)
         {

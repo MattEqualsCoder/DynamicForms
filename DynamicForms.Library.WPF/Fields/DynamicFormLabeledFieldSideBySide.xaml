@@ -6,7 +6,7 @@
                          xmlns:local="clr-namespace:DynamicForms.Library.WPF.Fields"
                          mc:Ignorable="d"
                          d:DesignHeight="300" d:DesignWidth="300">
-    <Grid HorizontalAlignment="Stretch">
+    <Grid HorizontalAlignment="Stretch" Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>

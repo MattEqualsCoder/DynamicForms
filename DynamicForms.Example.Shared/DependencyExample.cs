@@ -20,7 +20,7 @@ public class DependencyExample : INotifyPropertyChanged
         set => SetField(ref _checkBoxOne, value);
     }
 
-    [DynamicFormFieldTextBox(labelText: "First Text Box", visibleWhenProperty: nameof(CheckBoxOne))]
+    [DynamicFormFieldTextBox(labelText: "First Text Box", visibleWhenTrue: nameof(CheckBoxOne))]
     public string TextBoxOne { get; set; } = "";
     
     [DynamicFormFieldCheckBox(checkBoxText: "Make second text box editable")]
@@ -30,7 +30,7 @@ public class DependencyExample : INotifyPropertyChanged
         set => SetField(ref _checkBoxTwo, value);
     }
 
-    [DynamicFormFieldTextBox(labelText: "Second Text Box", editableWhenProperty: nameof(CheckBoxTwo))]
+    [DynamicFormFieldTextBox(labelText: "Second Text Box", editableWhenTrue: nameof(CheckBoxTwo))]
     public string TextBoxTwo { get; set; } = "";
     
     public event PropertyChangedEventHandler? PropertyChanged;

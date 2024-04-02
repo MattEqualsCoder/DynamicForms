@@ -11,6 +11,7 @@ public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
         InitializeComponent();
         
         MainLabel.Content = formField.Attributes.LabelText;
+        MainGrid.ToolTip = formField.Attributes.ToolTipText;
         
         if (formField.Type is DynamicFormFieldType.Button)
         {

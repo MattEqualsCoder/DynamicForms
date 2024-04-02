@@ -50,16 +50,16 @@ public class DynamicFormLabeledField : UserControl
                 throw new InvalidOperationException("Unknown DynamicFormFieldType");
         }
         
-        if (!string.IsNullOrEmpty(formField.Attributes.VisibleWhenProperty))
+        if (!string.IsNullOrEmpty(formField.Attributes.VisibleWhenTrue))
         {
-            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.VisibleWhenProperty);
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.VisibleWhenTrue);
             Visibility = (bool?)property?.GetValue(formField.ParentObject) != false ? Visibility.Visible : Visibility.Collapsed;
 
             if (formField.ParentObject is INotifyPropertyChanged notifyParent)
             {
                 notifyParent.PropertyChanged += (sender, args) =>
                 {
-                    if (args.PropertyName != formField.Attributes.VisibleWhenProperty)
+                    if (args.PropertyName != formField.Attributes.VisibleWhenTrue)
                     {
                         return;
                     }
@@ -68,16 +68,16 @@ public class DynamicFormLabeledField : UserControl
             }
         }
         
-        if (!string.IsNullOrEmpty(formField.Attributes.EditableWhenProperty))
+        if (!string.IsNullOrEmpty(formField.Attributes.EditableWhenTrue))
         {
-            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.EditableWhenProperty);
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.EditableWhenTrue);
             BodyControl.IsEnabled = (bool?)property?.GetValue(formField.ParentObject) != false;
             
             if (formField.ParentObject is INotifyPropertyChanged notifyParent)
             {
                 notifyParent.PropertyChanged += (sender, args) =>
                 {
-                    if (args.PropertyName != formField.Attributes.EditableWhenProperty)
+                    if (args.PropertyName != formField.Attributes.EditableWhenTrue)
                     {
                         return;
                     }

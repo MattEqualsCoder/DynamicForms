@@ -27,6 +27,8 @@ public partial class DynamicFormLabeledFieldVertical : DynamicFormLabeledField
             this.Find<TextBlock>(nameof(MainLabel))!.Text = formField.Attributes.LabelText;
         }
         
-        this.Find<StackPanel>(nameof(StackPanel))!.Children.Add(BodyControl);
+        var mainPanel = this.Find<StackPanel>(nameof(StackPanel))!;
+        mainPanel.Children.Add(BodyControl);
+        ToolTip.SetTip(mainPanel, formField.Attributes.ToolTipText);
     }
 }

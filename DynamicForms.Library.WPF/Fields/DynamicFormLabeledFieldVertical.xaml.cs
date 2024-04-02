@@ -9,6 +9,8 @@ public partial class DynamicFormLabeledFieldVertical : DynamicFormLabeledField
     public DynamicFormLabeledFieldVertical(DynamicFormField formField) : base(formField)
     {
         InitializeComponent();
+
+        StackPanel.ToolTip = formField.Attributes.ToolTipText;
         
         if (string.IsNullOrEmpty(formField.Attributes.LabelText))
         {
