@@ -30,12 +30,6 @@ public class FieldsExample
     [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (double)")]
     public double? DynamicFormFieldDoubleSlider { get; set; }
     
-    [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (float)")]
-    public float? DynamicFormFieldFloatSlider { get; set; }
-    
-    [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (decimal)")]
-    public decimal? DynamicFormFieldDecimalSlider { get; set; }
-    
     [DynamicFormFieldColorPicker("DynamicFormFieldColorPicker")]
     public byte[]? DynamicFormFieldColorPickerExample { get; set; }
     
@@ -48,14 +42,8 @@ public class FieldsExample
     [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExample")]
     public int? DynamicFormFieldNumericUpDownExample { get; set; }
     
-    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleDouble")]
-    public double? DynamicFormFieldNumericUpDownExampleDouble { get; set; }
-    
-    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleFloat")]
-    public float? DynamicFormFieldNumericUpDownExampleFloat { get; set; }
-    
-    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleDecimal")]
-    public decimal? DynamicFormFieldNumericUpDownExampleDecimal { get; set; }
+    [DynamicFormFieldNumericUpDown(increment: 0.1, labelText: "DynamicFormFieldNumericUpDownExample (decimal)")]
+    public decimal? DynamicFormFieldNumericUpDownExampleDouble { get; set; }
     
     [DynamicFormFieldEnableDisableReorder(nameof(DynamicFormFieldEnableDisableReorderOptions), "DynamicFormFieldEnableDisableReorder")]
     public string[]? DynamicFormFieldEnableDisableReorderExample { get; set; }

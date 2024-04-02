@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using DynamicForms.Library.Core;
 using DynamicForms.Library.Core.Attributes;
+using DynamicForms.Library.Core.Shared;
 
 namespace DynamicForms.Library.WPF.Fields;
 
@@ -306,9 +307,11 @@ public class DynamicFormLabeledField : UserControl
         {
             throw new InvalidOperationException("Invalid DynamicFormField object for Slider");
         }
+
+        var underlyingType = formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(double);
         
         var decimalPlaces = attributes.DecimalPlaces;
-        if (formField.Value?.GetType() == typeof(int) || formField.Value?.GetType() == typeof(int?) || formField.Value?.GetType() == typeof(short) || formField.Value?.GetType() == typeof(short?))
+        if (underlyingType == typeof(int))
         {
             decimalPlaces = 0;
         }
@@ -319,7 +322,7 @@ public class DynamicFormLabeledField : UserControl
             incrementAmount = Math.Pow(0.1, decimalPlaces);
         }
         
-        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix);
+        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix, underlyingType);
         
         control.ValueChanged += (sender, args) =>
         {
@@ -344,10 +347,7 @@ public class DynamicFormLabeledField : UserControl
     
     private Control GetColorPicker(DynamicFormField formField)
     {
-        if (formField.Value is not byte[] bytes)
-        {
-            throw new InvalidOperationException("Invalid value type for ColorPicker");
-        }
+        var bytes = formField.Value as byte[] ?? [0, 0, 0, 0];
         
         var control = new DynamicFormColorPicker(bytes);
         
@@ -374,10 +374,12 @@ public class DynamicFormLabeledField : UserControl
 
     private Control GetFilePicker(DynamicFormField formField)
     {
-        if (formField.Value is not string value || formField.Attributes is not DynamicFormFieldFilePickerAttribute filePickerAttribute)
+        if (formField.Attributes is not DynamicFormFieldFilePickerAttribute filePickerAttribute)
         {
             throw new InvalidOperationException("Invalid value type for ColorPicker");
         }
+        
+        var value = formField.Value as string ?? "";
 
         var control = new DynamicFormFilePicker(filePickerAttribute, value);
         
@@ -404,12 +406,13 @@ public class DynamicFormLabeledField : UserControl
     
     private Control GetNumericUpDown(DynamicFormField formField)
     {
-        if (formField.Attributes is not DynamicFormFieldNumericUpDownAttribute attributes || formField.Value == null)
+        if (formField.Attributes is not DynamicFormFieldNumericUpDownAttribute attributes)
         {
             throw new InvalidOperationException("Invalid attribute type for NumericUpDown control");
         }
 
-        var control = new DynamicFormNumericUpDown(attributes, formField.Value);
+        var underlyingType = formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(decimal);
+        var control = new DynamicFormNumericUpDown(attributes, formField.Value ?? 0, underlyingType);
 
         return control;
     }
@@ -420,11 +423,8 @@ public class DynamicFormLabeledField : UserControl
         {
             throw new InvalidOperationException("Invalid attribute type for EnableDisableReorder control");
         }
-
-        if (formField.Value is not ICollection<string> selectedOptions)
-        {
-            throw new InvalidOperationException("EnableDisableReorder must be of type ICollection<string>");
-        }
+        
+        var selectedOptions = formField.Value as ICollection<string> ?? [];
 
         var optionsProperty = formField.ParentObject.GetType().GetProperties()
                                   .FirstOrDefault(x => x.Name == attributes.OptionsProperty)
@@ -436,7 +436,7 @@ public class DynamicFormLabeledField : UserControl
             throw new InvalidOperationException("OptionsProperty must be of type ICollection>string>");
         }
         
-        var control = new DynamicFormEnableDisableReorderControl(options, selectedOptions);
+        var control = new DynamicFormEnableDisableReorderControl(options, selectedOptions, formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(string[]));
 
         control.ValueUpdated += (sender, args) =>
         {

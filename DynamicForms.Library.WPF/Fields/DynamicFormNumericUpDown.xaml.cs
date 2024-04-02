@@ -14,21 +14,21 @@ public partial class DynamicFormNumericUpDown : UserControl
     private double _maxValue = int.MaxValue;
     private string _previousText = "";
     
-    public DynamicFormNumericUpDown(DynamicFormFieldNumericUpDownAttribute upDownAttributes, object value)
+    public DynamicFormNumericUpDown(DynamicFormFieldNumericUpDownAttribute upDownAttributes, object value, Type type)
     {
         _increment = upDownAttributes.Increment;
         _minValue = upDownAttributes.MinValue;
         _maxValue = upDownAttributes.MaxValue;
         
-        if (value is int)
+        if (type == typeof(int))
         {
             _isInt = true;
         }
-        else if (value is double)
+        else if (type == typeof(double))
         {
             _isDouble = true;
         }
-        else if (value is float)
+        else if (type == typeof(float))
         {
             _isFloat = true;
         }

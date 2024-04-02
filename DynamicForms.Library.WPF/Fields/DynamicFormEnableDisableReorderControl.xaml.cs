@@ -9,11 +9,11 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
     private readonly ICollection<string> _options;
     private ICollection<string> _selectedOptions;
     
-    public DynamicFormEnableDisableReorderControl(ICollection<string> options, ICollection<string> selectedOptions)
+    public DynamicFormEnableDisableReorderControl(ICollection<string> options, ICollection<string> selectedOptions, Type type)
     {
         InitializeComponent();
         
-        if (selectedOptions is string[])
+        if (type == typeof(string[]))
         {
             _isArray = true;
         }

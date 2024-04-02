@@ -11,13 +11,13 @@ public partial class DynamicFormSliderControl : UserControl
     private readonly bool _isDecimal;
     private readonly bool _isFloat;
     
-    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix)
+    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix, Type type)
     {
         _suffix = suffix;
-        
-        _isInt = currentValue is int;
-        _isDecimal = currentValue is decimal;
-        _isFloat = currentValue is float;
+
+        _isInt = type == typeof(int);
+        _isDecimal = type == typeof(decimal);
+        _isFloat = type == typeof(float);
         
         InitializeComponent();
 
