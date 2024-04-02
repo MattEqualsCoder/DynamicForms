@@ -1,6 +1,8 @@
 # DynamicForms
 Dynamic UI builder for WPF and Avalonia. By creating a ViewModel with attributes attached to properties and events and passing that ViewModel into the DynamicFormControl, you can have the control build a form with various different controls to accommodate a wide variety of data types.
 
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/8299a2d7-c47e-45c3-82b6-d6fae0149c83)
+
 You can create the above via the below code:
 
 **ViewModel**
