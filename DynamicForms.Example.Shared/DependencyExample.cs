@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Example.Shared;
@@ -8,6 +9,7 @@ public class DependencyExample : INotifyPropertyChanged
 {
     private bool _checkBoxOne = true;
     private bool _checkBoxTwo = true;
+    private string _textBoxThree = "";
     
     [DynamicFormFieldText]
     public string DependencyExampleText =>
@@ -32,7 +34,17 @@ public class DependencyExample : INotifyPropertyChanged
 
     [DynamicFormFieldTextBox(labelText: "Second Text Box", editableWhenTrue: nameof(CheckBoxTwo))]
     public string TextBoxTwo { get; set; } = "";
-    
+
+    [DynamicFormFieldTextBox(labelText: "Third Text Box")]
+    public string TextBoxThree
+    {
+        get => _textBoxThree;
+        set => SetField(ref _textBoxThree, value);
+    }
+
+    [DynamicFormFieldButton("Button")]
+    public DependencyCommand DependencyCommand => new DependencyCommand();
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -47,4 +59,29 @@ public class DependencyExample : INotifyPropertyChanged
         OnPropertyChanged(propertyName);
         return true;
     }
+}
+
+public class DependencyCommand : ICommand
+{
+    public bool CanExecute(object? parameter)
+    {
+        if (parameter is not DependencyExample example)
+        {
+            return false;
+        }
+
+        return !string.IsNullOrEmpty(example.TextBoxThree);
+    }
+
+    public void Execute(object? parameter)
+    {
+        if (parameter is not DependencyExample example)
+        {
+            return;
+        }
+
+        example.TextBoxThree = "";
+    }
+
+    public event EventHandler? CanExecuteChanged;
 }

@@ -1,5 +1,7 @@
-﻿using DynamicForms.Library.Core.Attributes;
+﻿using System.Windows.Input;
+using DynamicForms.Library.Core.Attributes;
 using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace DynamicForms.Example.Shared;
 
@@ -19,6 +21,6 @@ public class BasicExample
 #pragma warning disable CS0067 // Event is never used
     public event EventHandler? ButtonPress;
 #pragma warning restore CS0067 // Event is never used
-
+    
     public string[] ComboBoxOptions => ["Test 1", "Test 2", "Test 3"];
 }

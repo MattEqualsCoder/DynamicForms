@@ -12,7 +12,7 @@ namespace DynamicForms.Library.Core.Attributes;
 /// <param name="editableWhenTrue">Property to look at to determine if the field should be editable or not</param>
 /// <param name="groupName">The group the field should be on</param>
 /// <param name="order">The order to show the field in</param>
-[AttributeUsage(AttributeTargets.Event)]
+[AttributeUsage(AttributeTargets.Event | AttributeTargets.Property)]
 public class DynamicFormFieldButtonAttribute(
     string buttonText,
     string labelText = "",
