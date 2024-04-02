@@ -22,6 +22,7 @@ public class DynamicFormFieldComboBoxAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.ComboBox;
-    
+    public override ICollection<Type>? AllowedTypes => [typeof(string), typeof(Enum)];
+
     public string? ComboBoxOptionsProperty { get; } = comboBoxOptionsProperty;
 }

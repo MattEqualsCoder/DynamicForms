@@ -22,6 +22,7 @@ public class DynamicFormFieldCheckBoxAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.CheckBox;
+    public override ICollection<Type>? AllowedTypes => [typeof(bool)];
 
     public string CheckBoxText = checkBoxText;
 }

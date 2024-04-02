@@ -10,24 +10,22 @@ public partial class DynamicFormSliderControl : UserControl
 {
     private string _suffix;
     private bool _isInt;
-    private bool _isDouble;
     private bool _isDecimal;
     private bool _isFloat;
     private Slider _slider;
 
-    public DynamicFormSliderControl() : this(0, 0, 0, 0, 0, "")
+    public DynamicFormSliderControl() : this(0, 0, 0, 0, 0, "", typeof(double))
     {
         
     }
     
-    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix)
+    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix, Type type)
     {
         _suffix = suffix;
 
-        _isInt = currentValue is int;
-        _isDouble = currentValue is double;
-        _isDecimal = currentValue is decimal;
-        _isFloat = currentValue is float;
+        _isInt = type == typeof(int);
+        _isDecimal = type == typeof(decimal);
+        _isFloat = type == typeof(float);
         
         InitializeComponent();
         

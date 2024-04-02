@@ -9,7 +9,7 @@ public class ChildObjectExample
     public ChildObjectOtherObject ChildObjectOne { get; set; } = new();
     
     [DynamicFormObject] 
-    public ChildObjectOtherObject ChildObjectTwo { get; set; } = new();
+    public ChildObjectOtherObject? ChildObjectTwo { get; set; }
     
     [DynamicFormObject] 
     public ChildObjectOtherObjectGroups ChildObjectOtherObjectGroups { get; set; } = new();

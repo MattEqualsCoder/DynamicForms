@@ -1,5 +1,6 @@
 using System.Reflection;
 using DynamicForms.Library.Core.Attributes;
+using DynamicForms.Library.Core.Shared;
 
 namespace DynamicForms.Library.Core;
 
@@ -102,13 +103,25 @@ public class DynamicFormGroup : DynamicFormObject
                 var propValue = property.GetValue(parentObject);
                 if (item.Attributes is DynamicFormFieldAttribute fieldAttribute)
                 {
+                    if (fieldAttribute.AllowedTypes != null)
+                    {
+                        var propertyType = property.PropertyType.GetUnderlyingType();
+                        if (!fieldAttribute.AllowedTypes.Contains(propertyType))
+                        {
+                            var allowedNames = string.Join(", ", fieldAttribute.AllowedTypes.Select(x => x.Name));
+                            throw new InvalidOperationException(
+                                $"Property {property.Name} type {property.PropertyType.Name} is not in the allowed type list of: {allowedNames}");
+                        }
+                    }
+
                     toReturn.Add(new DynamicFormField(parentObject, propValue, property, fieldAttribute, fieldAttribute.GroupName));
                 } 
                 else if (item.Attributes is DynamicFormObjectAttribute subObjectAttribute)
                 {
+                    
                     if (propValue == null)
                     {
-                        throw new InvalidOperationException("DynamicFormGroups cannot be null");
+                        propValue = Activator.CreateInstance(property.PropertyType.GetUnderlyingType()) ?? throw new InvalidOperationException("DynamicFormGroups cannot be null");
                     }
                     
                     toReturn.Add(new DynamicFormGroup(propValue, subObjectAttribute.GroupName));

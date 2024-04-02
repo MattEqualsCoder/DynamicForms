@@ -6,6 +6,7 @@ using AvaloniaControls;
 using AvaloniaControls.Controls;
 using DynamicForms.Library.Core;
 using DynamicForms.Library.Core.Attributes;
+using DynamicForms.Library.Core.Shared;
 
 namespace DynamicForms.Library.Avalonia.Fields;
 
@@ -241,9 +242,10 @@ public class DynamicFormLabeledField : UserControl
         {
             throw new InvalidOperationException("Invalid DynamicFormField object for Slider");
         }
-        
+
         var decimalPlaces = attributes.DecimalPlaces;
-        if (formField.Value?.GetType() == typeof(int) || formField.Value?.GetType() == typeof(int?) || formField.Value?.GetType() == typeof(short) || formField.Value?.GetType() == typeof(short?))
+        var underlyingType = formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(double);
+        if (underlyingType == typeof(int))
         {
             decimalPlaces = 0;
         }
@@ -254,7 +256,7 @@ public class DynamicFormLabeledField : UserControl
             incrementAmount = Math.Pow(0.1, decimalPlaces);
         }
         
-        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix);
+        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix, underlyingType);
         
         control.ValueChanged += (sender, args) =>
         {
@@ -279,10 +281,7 @@ public class DynamicFormLabeledField : UserControl
     
     private Control GetColorPicker(DynamicFormField formField)
     {
-        if (formField.Value is not byte[] bytes)
-        {
-            throw new InvalidOperationException("Invalid value type for ColorPicker");
-        }
+        var bytes = formField.Value as byte[] ?? [0, 0, 0, 0];
         
         var control = new DynamicFormColorPicker(bytes);
         
@@ -354,6 +353,8 @@ public class DynamicFormLabeledField : UserControl
         {
             throw new InvalidOperationException("Invalid attribute type for NumericUpDown control");
         }
+
+        var underlyingType = formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(decimal);
         
         var control = new NumericUpDown()
         {
@@ -365,15 +366,15 @@ public class DynamicFormLabeledField : UserControl
 
         control.ValueChanged += (sender, args) =>
         {
-            if (formField.Value is int)
+            if (underlyingType == typeof(int))
             {
-                formField.SetValue(formField.ParentObject, Convert.ToInt16(control.Value));
+                formField.SetValue(formField.ParentObject, Convert.ToInt32(control.Value));
             }
-            else if (formField.Value is double)
+            else if (underlyingType == typeof(double))
             {
                 formField.SetValue(formField.ParentObject, Convert.ToDouble(control.Value));
             }
-            else if (formField.Value is float)
+            else if (underlyingType == typeof(float))
             {
                 formField.SetValue(formField.ParentObject, (float)Convert.ToDouble(control.Value));
             }
@@ -405,12 +406,11 @@ public class DynamicFormLabeledField : UserControl
         {
             throw new InvalidOperationException("Invalid attribute type for EnableDisableReorder control");
         }
+        
+        var underlyingType = formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(string []);
 
-        if (formField.Value is not ICollection<string> selectedOptions)
-        {
-            throw new InvalidOperationException("EnableDisableReorder must be of type ICollection<string>");
-        }
-
+        var selectedOptions = formField.Value as ICollection<string> ?? [];
+        
         var optionsProperty = formField.ParentObject.GetType().GetProperties()
                                   .FirstOrDefault(x => x.Name == attributes.OptionsProperty)
                               ?? throw new InvalidOperationException(
@@ -421,7 +421,7 @@ public class DynamicFormLabeledField : UserControl
             throw new InvalidOperationException("OptionsProperty must be of type ICollection>string>");
         }
         
-        var control = new DynamicFormEnableDisableReorderControl(options, selectedOptions);
+        var control = new DynamicFormEnableDisableReorderControl(options, selectedOptions, underlyingType);
 
         control.ValueUpdated += (sender, args) =>
         {

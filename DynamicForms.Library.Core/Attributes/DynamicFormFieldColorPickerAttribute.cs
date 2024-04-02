@@ -20,4 +20,5 @@ public class DynamicFormFieldColorPickerAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.ColorPicker;
+    public override ICollection<Type>? AllowedTypes => [typeof(byte[])];
 }

@@ -23,5 +23,8 @@ public class DynamicFormFieldEnableDisableReorderAttribute(
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.EnableDisableReorderList;
 
+    public override ICollection<Type>? AllowedTypes =>
+        [typeof(string[]), typeof(List<string>)];
+
     public string OptionsProperty => optionsProperty;
 }

@@ -21,4 +21,5 @@ public class DynamicFormFieldTextBoxAttribute
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.TextBox;
+    public override ICollection<Type>? AllowedTypes => [typeof(string)];
 }

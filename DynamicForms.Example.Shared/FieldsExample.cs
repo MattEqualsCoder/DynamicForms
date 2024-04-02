@@ -8,57 +8,57 @@ namespace DynamicForms.Example.Shared;
 public class FieldsExample
 {
     [DynamicFormFieldTextBox("DynamicFormFieldTextBox")]
-    public string DynamicFormFieldTextBoxExample { get; set; } = "";
+    public string? DynamicFormFieldTextBoxExample { get; set; }
 
     [DynamicFormFieldText("DynamicFormFieldText (label)")]
     [YamlIgnore]
     public string DynamicFormFieldTextExample { get; set; } = "DynamicFormFieldText";
     
     [DynamicFormFieldCheckBox("DynamicFormCheckBox", "DynamicFormCheckBox (label)")]
-    public bool DynamicFormFieldCheckBoxExample { get; set; }
+    public bool? DynamicFormFieldCheckBoxExample { get; set; }
 
     [DynamicFormFieldComboBox(comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxOptions), 
         labelText: "DynamicFormFieldComboBox (string)")]
-    public string DynamicFormFieldComboBoxStringExample { get; set; } = "Option 1";
+    public string? DynamicFormFieldComboBoxStringExample { get; set; }
     
     [DynamicFormFieldComboBox("DynamicFormFieldComboBox (enum)")]
     public EnumOptionExamples DynamicFormFieldComboBoxEnumExample { get; set; }
     
     [DynamicFormFieldSlider(1, 10, labelText: "DynamicFormFieldSlider (int)")]
-    public int DynamicFormFieldSliderIntExample { get; set; } = 1;
+    public int? DynamicFormFieldSliderIntExample { get; set; }
     
     [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (double)")]
-    public double DynamicFormFieldDoubleSlider { get; set; } = 1;
+    public double? DynamicFormFieldDoubleSlider { get; set; }
     
     [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (float)")]
-    public float DynamicFormFieldFloatSlider { get; set; } = 1;
+    public float? DynamicFormFieldFloatSlider { get; set; }
     
     [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%", labelText: "DynamicFormFieldSlider (decimal)")]
-    public decimal DynamicFormFieldDecimalSlider { get; set; } = 1;
+    public decimal? DynamicFormFieldDecimalSlider { get; set; }
     
     [DynamicFormFieldColorPicker("DynamicFormFieldColorPicker")]
-    public byte[] DynamicFormFieldColorPickerExample { get; set; } = [0xFF, 0x21, 0x21, 0x21];
+    public byte[]? DynamicFormFieldColorPickerExample { get; set; }
     
     [DynamicFormFieldFilePicker(FilePickerType.OpenFile, "Text Files (*.txt, *.log)|*.txt;*.log|All files (*.*)|*.*", "", "", "DynamicFormFieldFilePicker (files)")]
-    public string DynamicFormFieldFilePickerFileExample { get; set; } = "";
+    public string? DynamicFormFieldFilePickerFileExample { get; set; }
     
     [DynamicFormFieldFilePicker(FilePickerType.Folder)]
-    public string DynamicFormFieldFilePickerFolderExample { get; set; } = "";
+    public string? DynamicFormFieldFilePickerFolderExample { get; set; }
     
     [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExample")]
-    public int DynamicFormFieldNumericUpDownExample { get; set; }
+    public int? DynamicFormFieldNumericUpDownExample { get; set; }
     
     [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleDouble")]
-    public double DynamicFormFieldNumericUpDownExampleDouble { get; set; }
+    public double? DynamicFormFieldNumericUpDownExampleDouble { get; set; }
     
     [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleFloat")]
-    public float DynamicFormFieldNumericUpDownExampleFloat { get; set; }
+    public float? DynamicFormFieldNumericUpDownExampleFloat { get; set; }
     
     [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExampleDecimal")]
-    public decimal DynamicFormFieldNumericUpDownExampleDecimal { get; set; }
+    public decimal? DynamicFormFieldNumericUpDownExampleDecimal { get; set; }
     
     [DynamicFormFieldEnableDisableReorder(nameof(DynamicFormFieldEnableDisableReorderOptions), "DynamicFormFieldEnableDisableReorder")]
-    public string[] DynamicFormFieldEnableDisableReorderExample { get; set; } = ["Five", "Two", "One"];
+    public string[]? DynamicFormFieldEnableDisableReorderExample { get; set; }
     
     [DynamicFormFieldButton("View YAML")] 
 #pragma warning disable CS0067 // Event is never used

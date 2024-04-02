@@ -11,6 +11,7 @@
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormEnableDisableReorderControlItem.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormLabeledFieldSideBySide.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormLabeledFieldVertical.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
+        <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormSliderControl.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Groups/DynamicFormGroupStyleBasic.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Groups/DynamicFormGroupStyleExpander.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
       </map>

@@ -28,7 +28,8 @@ public class DynamicFormFieldFilePickerAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.FilePicker;
-    
+    public override ICollection<Type>? AllowedTypes => [typeof(string)];
+
     public FilePickerType FilePickerType { get; } = filePickerType;
 
     public string Filter { get; } = filter;

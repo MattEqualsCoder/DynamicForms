@@ -1,3 +1,5 @@
+using System.Windows.Input;
+
 namespace DynamicForms.Library.Core.Attributes;
 
 /// <summary>
@@ -22,6 +24,8 @@ public class DynamicFormFieldButtonAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.Button;
+
+    public override ICollection<Type>? AllowedTypes => [typeof(ICommand)];
 
     public string ButtonText = buttonText;
 }

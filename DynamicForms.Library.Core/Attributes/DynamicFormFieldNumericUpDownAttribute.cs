@@ -26,6 +26,7 @@ public class DynamicFormFieldNumericUpDownAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.NumericUpDown;
+    public override ICollection<Type>? AllowedTypes => [typeof(int), typeof(double), typeof(float), typeof(decimal)];
 
     public double Increment { get; } = increment;
 

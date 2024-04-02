@@ -11,6 +11,8 @@ public abstract class DynamicFormFieldAttribute(
 {
     public abstract DynamicFormFieldType FieldType { get; }
     
+    public abstract ICollection<Type>? AllowedTypes { get; }
+    
     public string LabelText { get; } = labelText;
     public string? ToolTipText { get; } = toolTipText;
     public string? VisibleWhenProperty { get; } = visibleWhenProperty;

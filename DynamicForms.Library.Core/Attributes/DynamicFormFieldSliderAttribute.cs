@@ -30,6 +30,7 @@ public class DynamicFormFieldSliderAttribute(
     : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenProperty, editableWhenProperty, groupName, order)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.Slider;
+    public override ICollection<Type>? AllowedTypes => [typeof(int), typeof(double), typeof(float), typeof(decimal)];
 
     public double MinimumValue { get; } = minimumValue;
     public double MaximumValue { get; } = maximumValue;
