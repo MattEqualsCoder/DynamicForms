@@ -131,3 +131,5 @@ public class DependencyCommand : ICommand
     public event EventHandler? CanExecuteChanged;
 }
 ```
+
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/6dab4b8c-2a38-4c6c-809c-79d2ba0c8fa1)
