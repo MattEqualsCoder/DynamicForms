@@ -70,3 +70,4 @@ public partial class MainWindow : Window
 }
 ```
 
+![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/e681499c-beab-4562-8e46-cac52d18750e)
