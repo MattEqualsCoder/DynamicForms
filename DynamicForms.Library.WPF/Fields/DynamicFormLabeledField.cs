@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using DynamicForms.Library.Core;
 using DynamicForms.Library.Core.Attributes;
 using DynamicForms.Library.Core.Shared;
@@ -468,23 +469,57 @@ public class DynamicFormLabeledField : UserControl
         
         var eventName = formField.Value as string;
         
-        if (string.IsNullOrEmpty(eventName))
+        if (!string.IsNullOrEmpty(eventName))
         {
-            throw new InvalidOperationException("Invalid button event name");
+            var control = new Button() { Content = attributes.ButtonText };
+
+            control.Click += (sender, args) =>
+            {
+                var parentObject = formField.ParentObject;
+                ((Delegate?)parentObject
+                        .GetType()
+                        .GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic)!
+                        .GetValue(parentObject))?
+                    .DynamicInvoke(parentObject, EventArgs.Empty);
+            };
+
+            return control;
         }
-
-        var control = new Button() { Content = attributes.ButtonText };
-
-        control.Click += (sender, args) =>
+        else if (formField.Value is ICommand command)
         {
-            var parentObject = formField.ParentObject;
-            ((Delegate?)parentObject
-                    .GetType()
-                    .GetField(eventName, BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .GetValue(parentObject))?
-                .DynamicInvoke(parentObject, EventArgs.Empty);
-        };
+            var control = new Button() { Content = attributes.ButtonText };
+            
+            command.CanExecuteChanged += (sender, args) =>
+            {
+                control.IsEnabled = command.CanExecute(formField.ParentObject);
+            };
+            
+            if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
+            {
+                notifyPropertyChanged.PropertyChanged += (sender, args) =>
+                {
+                    control.IsEnabled = command.CanExecute(formField.ParentObject);
+                };
+            }
+            
+            control.IsEnabled = command.CanExecute(formField.ParentObject);
 
-        return control;
+            control.Click += (sender, args) =>
+            {
+                if (!command.CanExecute(formField.ParentObject))
+                {
+                    return;
+                }
+                
+                command.Execute(formField.ParentObject);
+            };
+
+            return control;
+
+        }
+        else
+        {
+            throw new InvalidOperationException("Invalid button type");
+        }
     }
 }

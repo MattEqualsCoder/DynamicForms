@@ -71,3 +71,63 @@ public class DependencyExample : INotifyPropertyChanged
 ```
 
 ![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/d19adde4-c43f-4d95-86f5-7bc2c9bcb522)
+
+## Button Commands
+While buttons can support EventHandlers, they can also support ICommand properties. In this case, the button will execute the ICommand's CanExecute and Execute methods, passing in the value of the object that the ICommand property is a part part. When attached to an ICommand property on a class that implements INotifyPropertyChanged, the CanExecute method will be called each time the parent object is modified, and the button's enabled state will be modified based on its response. Using this, you can allow a button to only be pressed when certain circumstances are met.
+
+```
+public class DependencyExample : INotifyPropertyChanged
+{
+    private string _nameTextBox = "";
+
+    [DynamicFormFieldTextBox(labelText: "Enter a Name")]
+    public string NameTextBox
+    {
+        get => _nameTextBox;
+        set => SetField(ref _nameTextBox, value);
+    }
+
+    [DynamicFormFieldButton("Submit Name")]
+    public DependencyCommand SubmitNameCommand => new DependencyCommand();
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
+}
+
+public class DependencyCommand : ICommand
+{
+    public bool CanExecute(object? parameter)
+    {
+        if (parameter is not DependencyExample example)
+        {
+            return false;
+        }
+
+        return !string.IsNullOrEmpty(example.NameTextBox);
+    }
+
+    public void Execute(object? parameter)
+    {
+        if (parameter is not DependencyExample example)
+        {
+            return;
+        }
+
+        example.NameTextBox = "";
+    }
+
+    public event EventHandler? CanExecuteChanged;
+}
+```
