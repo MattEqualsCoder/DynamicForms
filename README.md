@@ -1,4 +1,4 @@
-# DynamicForms
+# Dynamic Forms
 Dynamic UI builder for WPF and Avalonia. By creating a ViewModel with attributes attached to properties and events and passing that ViewModel into the DynamicFormControl, you can have the control build a form with various different controls to accommodate a wide variety of data types.
 
 ![image](https://github.com/MattEqualsCoder/DynamicForms/assets/63823784/8299a2d7-c47e-45c3-82b6-d6fae0149c83)
@@ -49,3 +49,19 @@ public partial class MainWindow : Window
 ```
 <control:DynamicFormControl Data="{Binding}" Margin="5" />
 ```
+
+## Usage
+
+1. Create multiple projects
+    - Shared library for view model classes
+    - WPF application
+    - Avalonia application
+2. Install nuget packages
+    - Shared library: MattEqualsCoder.DynamicForms.Core
+    - WPF application: MattEqualsCoder.DynamicForms.WPF
+    - Avalonia application: MattEqualsCoder.DynamicForms.Avalonia
+3. Add controls to WPF and Avalonia windows
+
+## Documentation
+
+You can view additional documentation about using it [here](https://github.com/MattEqualsCoder/DynamicForms/blob/main/Docs/1_Basic.md).
