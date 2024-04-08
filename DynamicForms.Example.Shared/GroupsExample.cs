@@ -7,7 +7,7 @@ namespace DynamicForms.Example.Shared;
 [DynamicFormGroupGroupBox(DynamicFormLayout.SideBySide, "Group Box with Side-By-Side Type")]
 [DynamicFormGroupExpander(DynamicFormLayout.TwoColumns, "Expander with Two Columns Type")]
 [DynamicFormGroupExpander(DynamicFormLayout.TwoColumns, "Expander with Child Groups")]
-[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Left Box", parentGroup: "Expander with Child Groups")]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Left Box", parentGroup: "Expander with Child Groups", platforms: DynamicFormPlatform.Linux | DynamicFormPlatform.Windows)]
 [DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Right Box", parentGroup: "Expander with Child Groups")]
 public class GroupsExample
 {

@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:generic="clr-namespace:System.Collections.Generic;assembly=System.Collections"
+             xmlns:fields="clr-namespace:DynamicForms.Library.Avalonia.Fields"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DynamicForms.Library.Avalonia.Fields.DynamicFormDictionaryComboBox"
+             x:DataType="fields:DynamicFormDictionaryComboBoxViewModel">
+    <UserControl.DataContext>
+        <fields:DynamicFormDictionaryComboBoxViewModel />
+    </UserControl.DataContext>
+    <ComboBox ItemsSource="{Binding Items }" 
+              SelectedValueBinding="{Binding Key}" 
+              DisplayMemberBinding="{Binding Value}"
+              Name="MainControl"
+    ></ComboBox>
+</UserControl>

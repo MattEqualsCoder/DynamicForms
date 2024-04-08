@@ -28,7 +28,8 @@ public partial class DynamicFormSliderControl : UserControl
         slider.Value = Convert.ToDouble(currentValue);
 
         var textBox = ValueTextBox;
-        textBox.Text = slider.Value.ToString(CultureInfo.CurrentCulture) + _suffix;
+        var textBoxValue = Math.Round(slider.Value, decimalPlaces);
+        textBox.Text = textBoxValue.ToString(CultureInfo.CurrentCulture) + _suffix;
 
         slider.ValueChanged += (sender, args) =>
         {

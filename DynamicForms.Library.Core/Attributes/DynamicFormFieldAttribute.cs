@@ -6,8 +6,9 @@ public abstract class DynamicFormFieldAttribute(
     string? visibleWhenTrue = null,
     string? editableWhenTrue = null,
     string groupName = "",
-    int order = int.MaxValue)
-    : DynamicFormObjectAttribute(groupName, order)
+    int order = int.MaxValue,
+    DynamicFormPlatform platforms = DynamicFormPlatform.All)
+    : DynamicFormObjectAttribute(groupName, order, platforms)
 {
     public abstract DynamicFormFieldType FieldType { get; }
     

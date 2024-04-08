@@ -12,6 +12,7 @@ public partial class DynamicFormFilePicker : UserControl
     private string _filter;
     private string? _checkSum;
     private string? _checkSumError;
+    private string? _dialogText;
     
     public DynamicFormFilePicker(DynamicFormFieldFilePickerAttribute attributes, string path)
     {
@@ -21,6 +22,7 @@ public partial class DynamicFormFilePicker : UserControl
         _filter = attributes.Filter;
         _checkSum = attributes.CheckSum;
         _checkSumError = attributes.CheckSumError;
+        _dialogText = attributes.DialogText;
     }
 
     public string Value { get; private set; } = "";
@@ -38,6 +40,7 @@ public partial class DynamicFormFilePicker : UserControl
         if (_filePickerType == FilePickerType.OpenFile)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.Title = _dialogText;
             dialog.FileName = Value;
             dialog.Filter = _filter;
             bool? result = dialog.ShowDialog();
@@ -50,6 +53,7 @@ public partial class DynamicFormFilePicker : UserControl
         else if (_filePickerType == FilePickerType.SaveFile)
         {
             var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.Title = _dialogText;
             dialog.FileName = Value;
             dialog.Filter = _filter;
             bool? result = dialog.ShowDialog();
@@ -62,6 +66,7 @@ public partial class DynamicFormFilePicker : UserControl
         else if (_filePickerType == FilePickerType.Folder)
         {
             var dialog = new Microsoft.Win32.OpenFolderDialog();
+            dialog.Title = _dialogText;
             dialog.FolderName = Value;
             bool? result = dialog.ShowDialog();
             if (result == true)

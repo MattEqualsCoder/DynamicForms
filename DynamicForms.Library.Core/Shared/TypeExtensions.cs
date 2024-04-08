@@ -14,13 +14,13 @@ public static class TypeExtensions
         {
             return typeof(ICommand);
         }
-        else if (!type.IsGenericType)
+        else if (type.IsGenericType && type.Name.StartsWith("Nullable"))
         {
-            return type;
+            return type.GenericTypeArguments[0];
         }
         else
         {
-            return type.GenericTypeArguments[0];
+            return type;
         }
     }
 }

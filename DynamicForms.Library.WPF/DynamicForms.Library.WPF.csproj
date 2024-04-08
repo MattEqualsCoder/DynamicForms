@@ -6,8 +6,25 @@
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <PackageId>MattEqualsCoder.DynamicForms.WPF</PackageId>
-        <Version>0.0.1-rc.1</Version>
+        <Version>0.0.2</Version>
+        <Title>Dynamic Forms WPF</Title>
+        <Description>Library to dynamically generate forms for user input based on attributes.</Description>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/MattEqualsCoder/DynamicForms</RepositoryUrl>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DynamicForms.Library.Core\DynamicForms.Library.Core.csproj" />

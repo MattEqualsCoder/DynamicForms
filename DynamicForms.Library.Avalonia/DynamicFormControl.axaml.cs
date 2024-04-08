@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using DynamicForms.Library.Avalonia.Groups;
 using DynamicForms.Library.Core;
+using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Library.Avalonia;
 
@@ -52,18 +53,19 @@ public partial class DynamicFormControl : UserControl
 
         var mainGroupControl = CreateFormGroup(dynamicForm.ParentGroup.GroupName, dynamicForm.ParentGroup.Style,
             dynamicForm.ParentGroup.Type,
-            dynamicForm.ParentGroup.Objects);
+            dynamicForm.ParentGroup.Objects,
+            dynamicForm.ParentGroup.Attributes);
 
         dockPanel.Children.Add(mainGroupControl);
     }
 
-    private Control CreateFormGroup(string groupName, DynamicFormGroupStyle style, DynamicFormLayout type, List<DynamicFormObject> groupObjects)
+    private Control CreateFormGroup(string groupName, DynamicFormGroupStyle style, DynamicFormLayout type, List<DynamicFormObject> groupObjects, DynamicFormGroupAttribute? attributes)
     {
         DynamicFormGroupStyleControl groupStyleControl = style switch
         {
             DynamicFormGroupStyle.Basic => new DynamicFormGroupStyleBasic(),
             DynamicFormGroupStyle.GroupBox => new DynamicFormGroupStyleGroupBox(groupName),
-            DynamicFormGroupStyle.Expander => new DynamicFormGroupStyleExpander(groupName),
+            DynamicFormGroupStyle.Expander => new DynamicFormGroupStyleExpander(groupName, (attributes as DynamicFormGroupExpanderAttribute)?.IsExpanded ?? false),
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
             
@@ -85,7 +87,7 @@ public partial class DynamicFormControl : UserControl
             }
             else if (formObject is DynamicFormGroup group)
             {
-                var subGroupControl = CreateFormGroup(group.GroupName, group.Style, group.Type, group.Objects);
+                var subGroupControl = CreateFormGroup(group.GroupName, group.Style, group.Type, group.Objects, group.Attributes);
                 if (formObject != lastGroup)
                 {
                     subGroupControl.Margin = new Thickness(0, 0, 0, 5);

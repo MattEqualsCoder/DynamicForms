@@ -7,7 +7,7 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
 {
     private readonly ListBox _listBox;
     private readonly bool _isArray;
-    private readonly ICollection<string> _options;
+    private ICollection<string> _options;
     private ICollection<string> _selectedOptions;
     
     public DynamicFormEnableDisableReorderControl() : this([], [], typeof(string[]))
@@ -45,6 +45,13 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
     public void SetValue(ICollection<string> selectedOptions)
     {
         _selectedOptions = selectedOptions;
+        PopulateListBox();
+    }
+    
+    public void SetOptions(ICollection<string> options)
+    {
+        _options = options;
+        _selectedOptions = _selectedOptions.Where(options.Contains).ToList();
         PopulateListBox();
     }
 

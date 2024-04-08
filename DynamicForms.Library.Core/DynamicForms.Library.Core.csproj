@@ -5,8 +5,24 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>MattEqualsCoder.DynamicForms.Core</PackageId>
-        <Version>0.0.1-rc.1</Version>
+        <Version>0.0.2</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Dynamic Forms Core</Title>
+        <Description>Library to dynamically generate forms for user input based on attributes.</Description>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <RepositoryUrl>https://github.com/MattEqualsCoder/DynamicForms</RepositoryUrl>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
 </Project>

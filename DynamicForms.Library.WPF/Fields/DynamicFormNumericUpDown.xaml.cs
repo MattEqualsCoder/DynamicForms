@@ -47,6 +47,8 @@ public partial class DynamicFormNumericUpDown : UserControl
     
     public decimal DecimalValue => (decimal)Value;
 
+    public event EventHandler? ValueChanged;
+
     public void SetValue(object value)
     {
         if (_isInt)
@@ -68,6 +70,7 @@ public partial class DynamicFormNumericUpDown : UserControl
 
         MainTextBox.Text = Value.ToString() ?? "0";
         _previousText = MainTextBox.Text;
+        ValueChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void UpButtonBase_OnClick(object sender, RoutedEventArgs e)

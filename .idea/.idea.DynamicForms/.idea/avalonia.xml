@@ -7,6 +7,7 @@
         <entry key="DynamicForms.Example.Avalonia/MainWindow.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/DynamicFormControl.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormColorPicker.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
+        <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormDictionaryComboBox.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormEnableDisableReorderControl.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormEnableDisableReorderControlItem.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />
         <entry key="DynamicForms.Library.Avalonia/Fields/DynamicFormLabeledFieldSideBySide.axaml" value="DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj" />

@@ -7,16 +7,17 @@ public partial class DynamicFormGroupStyleExpander : DynamicFormGroupStyleContro
 {
     private ExpanderControl _expander;
 
-    public DynamicFormGroupStyleExpander() : this("")
+    public DynamicFormGroupStyleExpander() : this("", false)
     {
         
     }
     
-    public DynamicFormGroupStyleExpander(string groupName)
+    public DynamicFormGroupStyleExpander(string groupName, bool isExpanded)
     {
         InitializeComponent();
         _expander = this.Find<ExpanderControl>(nameof(MainPanel))!;
         _expander.HeaderText = groupName;
+        _expander.IsContentVisible = isExpanded;
     }
 
     public override void AddBody(DynamicFormGroupLayoutControl layoutControl)

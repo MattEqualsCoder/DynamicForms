@@ -6,9 +6,25 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>MattEqualsCoder.DynamicForms.Avalonia</PackageId>
-        <Version>0.0.1-rc.1</Version>
+        <Version>0.0.2</Version>
         <Authors>MattEqualsCoder</Authors>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <RepositoryUrl>https://github.com/MattEqualsCoder/DynamicForms</RepositoryUrl>
+        <Title>Dynamic Forms Avalonia</Title>
+        <Description>Library to dynamically generate forms for user input based on attributes.</Description>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="0.9.12" />

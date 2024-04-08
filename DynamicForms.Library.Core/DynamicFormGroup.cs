@@ -18,13 +18,14 @@ public class DynamicFormGroup : DynamicFormObject
         AddFormObjects(value);
     }
     
-    public DynamicFormGroup(object value, string groupName, string parentGroupName, DynamicFormGroupStyle style, DynamicFormLayout type)
+    public DynamicFormGroup(object value, string groupName, string parentGroupName, DynamicFormGroupStyle style, DynamicFormLayout type, DynamicFormGroupAttribute attributes)
     {
         Value = value;
         GroupName = groupName;
         ParentGroupName = parentGroupName;
         Style = style;
         Type = type;
+        Attributes = attributes;
     }
     
     public string GroupName { get; init; }
@@ -32,18 +33,19 @@ public class DynamicFormGroup : DynamicFormObject
     public DynamicFormLayout Type { get; init; }
     public override bool IsGroup => true;
     public override string ParentGroupName { get; }
+    public DynamicFormGroupAttribute? Attributes;
 
     private void AddFormObjects(object value)
     {
         var subGroupAttributes = value.GetType().GetCustomAttributes()
-            .Where(x => x is DynamicFormGroupAttribute)
+            .Where(x => x is DynamicFormGroupAttribute attr && IsApplicablePlatform(attr.Platforms))
             .Cast<DynamicFormGroupAttribute>()
             .OrderBy(x => x.Order)
             .ToList();
 
         var subGroups = subGroupAttributes
             .Where(x => x.ParentGroup == null)
-            .Select(x => new DynamicFormGroup(value, x.Name, GroupName, x.Style, x.Type))
+            .Select(x => new DynamicFormGroup(value, x.Name, GroupName, x.Style, x.Type, x))
             .ToList();
 
         var subGroupMap = subGroups.ToDictionary(x => x.GroupName, x => x);
@@ -54,7 +56,7 @@ public class DynamicFormGroup : DynamicFormObject
             var parentSubgroup = subGroups.FirstOrDefault(x => x.GroupName == childSubgroupAttribute.ParentGroup) ??
                                  subGroups.First();
             var childSubgroup = new DynamicFormGroup(value, childSubgroupAttribute.Name, parentSubgroup.GroupName,
-                childSubgroupAttribute.Style, childSubgroupAttribute.Type);
+                childSubgroupAttribute.Style, childSubgroupAttribute.Type, childSubgroupAttribute);
             parentSubgroup.Objects.Add(childSubgroup);
             subGroupMap.Add(childSubgroupAttribute.Name, childSubgroup); 
         }
@@ -84,13 +86,13 @@ public class DynamicFormGroup : DynamicFormObject
         var properties = parentObject.GetType().GetProperties()
             .Select(x => (IsProperty: true,
                 Property: x as object,
-                Attributes: x.GetCustomAttributes(true).FirstOrDefault(a => a is DynamicFormObjectAttribute)))
+                Attributes: x.GetCustomAttributes(true).FirstOrDefault(a => a is DynamicFormObjectAttribute attr && IsApplicablePlatform(attr.Platforms))))
             .Where(x => x.Attributes != null);
         
         var events = parentObject.GetType().GetEvents()
             .Select(x => (IsProperty: false,
                 Property: x as object,
-                Attributes: x.GetCustomAttributes(true).FirstOrDefault(a => a is DynamicFormObjectAttribute)))
+                Attributes: x.GetCustomAttributes(true).FirstOrDefault(a => a is DynamicFormObjectAttribute attr && IsApplicablePlatform(attr.Platforms))))
             .Where(x => x.Attributes != null);
 
         var items = properties.Concat(events).OrderBy(x => ((DynamicFormObjectAttribute)x.Attributes!).Order);
@@ -136,6 +138,29 @@ public class DynamicFormGroup : DynamicFormObject
         }
 
         return toReturn;
+    }
+
+    private bool IsApplicablePlatform(DynamicFormPlatform platforms)
+    {
+        if (platforms == DynamicFormPlatform.All)
+        {
+            return true;
+        }
+        
+        if (OperatingSystem.IsWindows())
+        {
+            return (platforms & DynamicFormPlatform.Windows) == DynamicFormPlatform.Windows;
+        }
+        else if (OperatingSystem.IsLinux())
+        {
+            return (platforms & DynamicFormPlatform.Linux) == DynamicFormPlatform.Linux;
+        }
+        else if (OperatingSystem.IsMacOS())
+        {
+            return (platforms & DynamicFormPlatform.MacOS) == DynamicFormPlatform.MacOS;
+        }
+
+        return false;
     }
 
     // ReSharper disable once CollectionNeverQueried.Global

@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using DynamicForms.Library.Core;
 using DynamicForms.Library.Core.Attributes;
 using DynamicForms.Library.Core.Shared;
@@ -64,7 +65,20 @@ public class DynamicFormLabeledField : UserControl
                     {
                         return;
                     }
-                    Visibility = (bool?)property?.GetValue(formField.ParentObject) != false ? Visibility.Visible : Visibility.Collapsed;
+
+                    if (CheckAccess())
+                    {
+                        Visibility = (bool?)property?.GetValue(formField.ParentObject) != false ? Visibility.Visible : Visibility.Collapsed;    
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            Visibility = (bool?)property?.GetValue(formField.ParentObject) != false
+                                ? Visibility.Visible
+                                : Visibility.Collapsed;
+                        });
+                    }
                 };
             }
         }
@@ -82,7 +96,18 @@ public class DynamicFormLabeledField : UserControl
                     {
                         return;
                     }
-                    BodyControl.IsEnabled = (bool?)property?.GetValue(formField.ParentObject) != false;
+
+                    if (CheckAccess())
+                    {
+                        BodyControl.IsEnabled = (bool?)property?.GetValue(formField.ParentObject) != false;    
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            BodyControl.IsEnabled = (bool?)property?.GetValue(formField.ParentObject) != false;
+                        });
+                    }
                 };
             }
         }
@@ -106,7 +131,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.Text = formField.GetValue(formField.ParentObject) as string ?? "";
+                if (Dispatcher.CheckAccess())
+                {
+                    control.Text = formField.GetValue(formField.ParentObject) as string ?? "";    
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.Text = formField.GetValue(formField.ParentObject) as string ?? "";
+                    });
+                }
             };
         }
 
@@ -115,7 +150,24 @@ public class DynamicFormLabeledField : UserControl
     
     private TextBlock GetTextBlock(DynamicFormField formField)
     {
+        if (formField.Attributes is not DynamicFormFieldTextAttribute attributes)
+        {
+            throw new InvalidOperationException("Invalid attribute type for TextBlock control");
+        }
+        
         var control = new TextBlock() { Text = formField.Value as string, TextWrapping = TextWrapping.Wrap };
+        
+        if (attributes.Alignment != DynamicFormAlignment.Default)
+        {
+            control.HorizontalAlignment = attributes.Alignment switch
+            {
+                DynamicFormAlignment.Right => HorizontalAlignment.Right,
+                DynamicFormAlignment.Left => HorizontalAlignment.Left,
+                DynamicFormAlignment.Center => HorizontalAlignment.Center,
+                DynamicFormAlignment.Stretch => HorizontalAlignment.Stretch,
+                _ => control.HorizontalAlignment
+            };
+        }
         
         if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
         {
@@ -126,7 +178,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.Text = formField.GetValue(formField.ParentObject) as string ?? "";
+                if (CheckAccess())
+                {
+                    control.Text = formField.GetValue(formField.ParentObject) as string ?? "";    
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.Text = formField.GetValue(formField.ParentObject) as string ?? "";
+                    });
+                }
             };
         }
 
@@ -141,6 +203,18 @@ public class DynamicFormLabeledField : UserControl
         }
         
         var control = new CheckBox() { IsChecked = formField.Value as bool?, Content = attributes.CheckBoxText};
+        
+        if (attributes.Alignment != DynamicFormAlignment.Default)
+        {
+            control.HorizontalAlignment = attributes.Alignment switch
+            {
+                DynamicFormAlignment.Right => HorizontalAlignment.Right,
+                DynamicFormAlignment.Left => HorizontalAlignment.Left,
+                DynamicFormAlignment.Center => HorizontalAlignment.Center,
+                DynamicFormAlignment.Stretch => HorizontalAlignment.Stretch,
+                _ => control.HorizontalAlignment
+            };
+        }
         
         control.Checked += (sender, args) =>
         {
@@ -161,7 +235,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.IsChecked = formField.GetValue(formField.ParentObject) as bool?;
+                if (CheckAccess())
+                {
+                    control.IsChecked = formField.GetValue(formField.ParentObject) as bool?;    
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.IsChecked = formField.GetValue(formField.ParentObject) as bool?;
+                    });
+                }
             };
         }
 
@@ -185,77 +269,92 @@ public class DynamicFormLabeledField : UserControl
                     "ComboBox specified without a ComboBoxOptionsProperty being designated");
             }
 
-            var options = optionsProperty.GetValue(formField.ParentObject) as ICollection<string>;
+            var value = optionsProperty.GetValue(formField.ParentObject);
 
-            if (options == null)
+            if (value is ICollection<string> options)
             {
-                throw new InvalidOperationException("ComboBoxOptionsProperty must be a collection of strings");
+                ComboBox control = new ComboBox() { ItemsSource = options, SelectedItem = formField.Value };
+                
+                control.SelectionChanged += (sender, args) =>
+                {
+                    formField.SetValue(formField.ParentObject, control.SelectedItem);
+                };
+        
+                if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
+                {
+                    notifyPropertyChanged.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName != formField.PropertyName)
+                        {
+                            return;
+                        }
+
+                        if (CheckAccess())
+                        {
+                            control.SelectedItem = formField.GetValue(formField.ParentObject) as string;
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                control.SelectedItem = formField.GetValue(formField.ParentObject) as string;
+                            });
+                        }
+                    };
+                }
+
+                return control;
+                
+            }
+            else if (value is Dictionary<string, string> map)
+            {
+                var control = new ComboBox() { ItemsSource = map, SelectedValuePath = "Key", DisplayMemberPath = "Value" };
+
+                control.SelectedItem = map.FirstOrDefault(x => x.Key == formField.Value as string);;
+                
+                control.SelectionChanged += (sender, args) =>
+                {
+                    formField.SetValue(formField.ParentObject, (control.SelectedItem as KeyValuePair<string, string>?)?.Key);
+                };
+        
+                if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
+                {
+                    notifyPropertyChanged.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName != formField.PropertyName)
+                        {
+                            return;
+                        }
+
+                        if (CheckAccess())
+                        {
+                            control.SelectedItem = map.First(x =>
+                                x.Key == formField.GetValue(formField.ParentObject) as string);
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                control.SelectedItem = map.First(x =>
+                                    x.Key == formField.GetValue(formField.ParentObject) as string);
+                            });
+                        }
+                    };
+                }
+
+                return control;
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid type for ComboBox");
             }
             
-            var control = new ComboBox() { ItemsSource = options, SelectedItem = formField.Value };
-        
-            control.SelectionChanged += (sender, args) =>
-            {
-                formField.SetValue(formField.ParentObject, control.SelectedItem);
-            };
-        
-            if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
-            {
-                notifyPropertyChanged.PropertyChanged += (sender, args) =>
-                {
-                    if (args.PropertyName != formField.PropertyName)
-                    {
-                        return;
-                    }
-
-                    control.SelectedItem = formField.GetValue(formField.ParentObject) as string;
-                };
-            }
-
-            return control;
+            
         }
         else
         {
             throw new InvalidOperationException("Invalid DynamicFormField object for ComboBox");
         }
-        
-        /*var optionsProperty = formField.ParentObject.GetType().GetProperties()
-            .FirstOrDefault(x => x.Name == formField.Attributes.ComboBoxOptionsProperty);
-
-        if (optionsProperty == null)
-        {
-            throw new InvalidOperationException(
-                "ComboBox specified without a ComboBoxOptionsProperty being designated");
-        }
-
-        var options = optionsProperty.GetValue(formField.ParentObject) as ICollection<string>;
-
-        if (options == null)
-        {
-            throw new InvalidOperationException("ComboBoxOptionsProperty must be a collection of strings");
-        }
-            
-        var control = new ComboBox() { ItemsSource = options, SelectedItem = formField.Value };
-        
-        control.SelectionChanged += (sender, args) =>
-        {
-            formField.SetValue(formField.ParentObject, control.SelectedItem);
-        };
-        
-        if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
-        {
-            notifyPropertyChanged.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName != formField.PropertyName)
-                {
-                    return;
-                }
-
-                control.SelectedItem = formField.GetValue(formField.ParentObject) as string;
-            };
-        }
-
-        return control;*/
     }
     
     private ComboBox GetEnumComboBox(DynamicFormField formField)
@@ -282,7 +381,6 @@ public class DynamicFormLabeledField : UserControl
         
         control.SelectionChanged += (sender, args) =>
         {
-            
             formField.SetValue(formField.ParentObject, descriptionToEnums[(string)control.SelectedItem]);
         };
         
@@ -295,7 +393,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.SelectedItem = ((Enum)formField.GetValue(formField.ParentObject)!).GetDescription();
+                if (CheckAccess())
+                {
+                    control.SelectedItem = ((Enum)formField.GetValue(formField.ParentObject)!).GetDescription();;
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.SelectedItem = ((Enum)formField.GetValue(formField.ParentObject)!).GetDescription();
+                    });
+                }
             };
         }
 
@@ -339,7 +447,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.SetValue(Convert.ToDouble(formField.GetValue(formField.ParentObject)));
+                if (CheckAccess())
+                {
+                    control.SetValue(Convert.ToDouble(formField.GetValue(formField.ParentObject)));
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.SetValue(Convert.ToDouble(formField.GetValue(formField.ParentObject)));
+                    });
+                }
             };
         }
 
@@ -366,7 +484,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.SetValue(formField.GetValue(formField.ParentObject) as byte[] ?? [0, 0, 0, 0]);
+                if (CheckAccess())
+                {
+                    control.SetValue(formField.GetValue(formField.ParentObject) as byte[] ?? [0, 0, 0, 0]);
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.SetValue(formField.GetValue(formField.ParentObject) as byte[] ?? [0, 0, 0, 0]);
+                    });
+                }
             };
         }
 
@@ -398,7 +526,17 @@ public class DynamicFormLabeledField : UserControl
                     return;
                 }
 
-                control.SetValue(formField.GetValue(formField.ParentObject) as string ?? "");
+                if (CheckAccess())
+                {
+                    control.SetValue(formField.GetValue(formField.ParentObject) as string ?? "");
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.SetValue(formField.GetValue(formField.ParentObject) as string ?? "");
+                    });
+                }
             };
         }
 
@@ -414,6 +552,34 @@ public class DynamicFormLabeledField : UserControl
 
         var underlyingType = formField.Property?.PropertyType.GetUnderlyingType() ?? typeof(decimal);
         var control = new DynamicFormNumericUpDown(attributes, formField.Value ?? 0, underlyingType);
+        
+        control.ValueChanged += (sender, args) =>
+        {
+            formField.SetValue(formField.ParentObject, control.Value);
+        };
+
+        if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
+        {
+            notifyPropertyChanged.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName != formField.PropertyName)
+                {
+                    return;
+                }
+
+                if (CheckAccess())
+                {
+                    control.SetValue(formField.GetValue(formField.ParentObject) ?? 0);
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        control.SetValue(formField.GetValue(formField.ParentObject) ?? 0);
+                    });
+                }
+            };
+        }
 
         return control;
     }
@@ -448,12 +614,35 @@ public class DynamicFormLabeledField : UserControl
         {
             notifyPropertyChanged.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName != formField.PropertyName)
+                if (args.PropertyName == formField.PropertyName)
                 {
-                    return;
+                    if (CheckAccess())
+                    {
+                        control.SetValue(formField.GetValue(formField.ParentObject) as ICollection<string> ?? []);    
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            control.SetValue(formField.GetValue(formField.ParentObject) as ICollection<string> ?? []);
+                        });
+                    }
                 }
-
-                control.SetValue(formField.GetValue(formField.ParentObject) as ICollection<string> ?? []);
+                else if (args.PropertyName == attributes.OptionsProperty)
+                {
+                    if (CheckAccess())
+                    {
+                        control.SetOptions(optionsProperty.GetValue(formField.ParentObject) as ICollection<string> ?? []);
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            control.SetOptions(optionsProperty.GetValue(formField.ParentObject) as ICollection<string> ?? []);
+                        });
+                    }
+                }
+                
             };
         }
 
@@ -473,6 +662,18 @@ public class DynamicFormLabeledField : UserControl
         {
             var control = new Button() { Content = attributes.ButtonText };
 
+            if (attributes.Alignment != DynamicFormAlignment.Default)
+            {
+                control.HorizontalAlignment = attributes.Alignment switch
+                {
+                    DynamicFormAlignment.Right => HorizontalAlignment.Right,
+                    DynamicFormAlignment.Left => HorizontalAlignment.Left,
+                    DynamicFormAlignment.Center => HorizontalAlignment.Center,
+                    DynamicFormAlignment.Stretch => HorizontalAlignment.Stretch,
+                    _ => control.HorizontalAlignment
+                };
+            }
+
             control.Click += (sender, args) =>
             {
                 var parentObject = formField.ParentObject;
@@ -488,6 +689,18 @@ public class DynamicFormLabeledField : UserControl
         else if (formField.Value is ICommand command)
         {
             var control = new Button() { Content = attributes.ButtonText };
+            
+            if (attributes.Alignment != DynamicFormAlignment.Default)
+            {
+                control.HorizontalAlignment = attributes.Alignment switch
+                {
+                    DynamicFormAlignment.Right => HorizontalAlignment.Right,
+                    DynamicFormAlignment.Left => HorizontalAlignment.Left,
+                    DynamicFormAlignment.Center => HorizontalAlignment.Center,
+                    DynamicFormAlignment.Stretch => HorizontalAlignment.Stretch,
+                    _ => control.HorizontalAlignment
+                };
+            }
             
             command.CanExecuteChanged += (sender, args) =>
             {

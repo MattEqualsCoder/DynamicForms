@@ -6,7 +6,7 @@ namespace DynamicForms.Library.WPF.Fields;
 public partial class DynamicFormEnableDisableReorderControl : UserControl
 {
     private readonly bool _isArray;
-    private readonly ICollection<string> _options;
+    private ICollection<string> _options;
     private ICollection<string> _selectedOptions;
     
     public DynamicFormEnableDisableReorderControl(ICollection<string> options, ICollection<string> selectedOptions, Type type)
@@ -38,6 +38,13 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
     public void SetValue(ICollection<string> selectedOptions)
     {
         _selectedOptions = selectedOptions;
+        PopulateListBox();
+    }
+
+    public void SetOptions(ICollection<string> options)
+    {
+        _options = options;
+        _selectedOptions = _selectedOptions.Where(options.Contains).ToList();
         PopulateListBox();
     }
 
@@ -98,8 +105,6 @@ public partial class DynamicFormEnableDisableReorderControl : UserControl
             newList.Insert(index, item.OptionName);
             _selectedOptions = newList;
         }
-        
-        Console.WriteLine(string.Join(", ", _selectedOptions));
         
         PopulateListBox();
         ValueUpdated?.Invoke(this, EventArgs.Empty);

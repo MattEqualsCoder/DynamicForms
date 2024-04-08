@@ -9,6 +9,7 @@ namespace DynamicForms.Library.Core.Attributes;
 /// <param name="editableWhenTrue">Property to look at to determine if the field should be editable or not</param>
 /// <param name="groupName">The group the field should be on</param>
 /// <param name="order">The order to show the field in</param>
+/// <param name="platforms">The platform(s) the object should be displayed on</param>
 [AttributeUsage((AttributeTargets.Property))]
 public class DynamicFormFieldTextBoxAttribute
 (
@@ -17,9 +18,10 @@ public class DynamicFormFieldTextBoxAttribute
     string? visibleWhenTrue = null,
     string? editableWhenTrue = null,
     string groupName = "",
-    int order = int.MaxValue)
-    : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order)
+    int order = int.MaxValue,
+    DynamicFormPlatform platforms = DynamicFormPlatform.All)
+    : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order, platforms)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.TextBox;
-    public override ICollection<Type>? AllowedTypes => [typeof(string)];
+    public override ICollection<Type> AllowedTypes => [typeof(string)];
 }

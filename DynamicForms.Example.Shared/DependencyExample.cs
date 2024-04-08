@@ -10,6 +10,7 @@ public class DependencyExample : INotifyPropertyChanged
     private bool _checkBoxOne = true;
     private bool _checkBoxTwo = true;
     private string _nameTextBox = "";
+    private string _nameText = "Please enter a name above";
     
     [DynamicFormFieldText]
     public string DependencyExampleText =>
@@ -39,7 +40,18 @@ public class DependencyExample : INotifyPropertyChanged
     public string NameTextBox
     {
         get => _nameTextBox;
-        set => SetField(ref _nameTextBox, value);
+        set
+        {
+            SetField(ref _nameTextBox, value);
+            NameDisplayText = string.IsNullOrEmpty(value) ? "Please enter a name above" : $"Hello {value}";
+        }
+    }
+    
+    [DynamicFormFieldText]
+    public string NameDisplayText
+    {
+        get => _nameText;
+        set => SetField(ref _nameText, value);
     }
 
     [DynamicFormFieldButton("Submit Name")]
