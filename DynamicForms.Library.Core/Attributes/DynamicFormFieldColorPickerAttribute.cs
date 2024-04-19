@@ -3,7 +3,8 @@ namespace DynamicForms.Library.Core.Attributes;
 /// <summary>
 /// Attribute for creating a control for a argb byte array from a hexadecimal value entered in a text box
 /// </summary>
-/// <param name="labelText">The form label text</param>
+/// <param name="label">The form label text</param>
+/// <param name="labelIsProperty">If the label is a property instead of text</param>
 /// <param name="toolTipText">Text to display when hovering over the object</param>
 /// <param name="visibleWhenTrue">Property to look at to determine if the field should be shown or not</param>
 /// <param name="editableWhenTrue">Property to look at to determine if the field should be editable or not</param>
@@ -12,14 +13,15 @@ namespace DynamicForms.Library.Core.Attributes;
 /// <param name="platforms">The platform(s) the object should be displayed on</param>
 [AttributeUsage((AttributeTargets.Property))]
 public class DynamicFormFieldColorPickerAttribute(
-    string labelText = "",
+    string label = "",
+    bool labelIsProperty = false,
     string? toolTipText = null,
     string? visibleWhenTrue = null,
     string? editableWhenTrue = null,
     string groupName = "",
     int order = int.MaxValue,
     DynamicFormPlatform platforms = DynamicFormPlatform.All)
-    : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order, platforms)
+    : DynamicFormFieldAttribute(label, labelIsProperty, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order, platforms)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.ColorPicker;
     public override ICollection<Type> AllowedTypes => [typeof(byte[])];

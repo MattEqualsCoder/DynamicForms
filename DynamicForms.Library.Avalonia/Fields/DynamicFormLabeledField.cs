@@ -15,7 +15,7 @@ using DynamicForms.Library.Core.Shared;
 
 namespace DynamicForms.Library.Avalonia.Fields;
 
-public class DynamicFormLabeledField : UserControl
+public abstract class DynamicFormLabeledField : UserControl
 {
     protected Control BodyControl;
 
@@ -55,6 +55,35 @@ public class DynamicFormLabeledField : UserControl
                 break;
             default:
                 throw new InvalidOperationException("Unknown DynamicFormFieldType");
+        }
+
+        if (formField.Attributes.LabelIsProperty)
+        {
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.Label);
+
+            if (formField.ParentObject is INotifyPropertyChanged notifyParent)
+            {
+                notifyParent.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName != formField.Attributes.Label)
+                    {
+                        return;
+                    }
+                    
+                    if (Dispatcher.UIThread.CheckAccess())
+                    {
+                        SetLabelText(property!.GetValue(formField.ParentObject) as string ?? "");
+                    }
+                    else
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            SetLabelText(property!.GetValue(formField.ParentObject) as string ?? "");
+                        });
+                    }
+                };
+
+            }
         }
 
         if (!string.IsNullOrEmpty(formField.Attributes.VisibleWhenTrue))
@@ -115,6 +144,8 @@ public class DynamicFormLabeledField : UserControl
             }
         }
     }
+
+    public abstract void SetLabelText(string text);
 
     private TextBox GetTextBox(DynamicFormField formField)
     {
@@ -483,6 +514,7 @@ public class DynamicFormLabeledField : UserControl
                 FilePickerType.SaveFile => FileInputControlType.SaveFile,
                 _ => FileInputControlType.Folder
             },
+            FilePath = formField.GetValue(formField.ParentObject) as string ?? "",
             DialogTitle = attributes.DialogText,
             Filter = attributes.Filter,
             FileValidationHash = attributes.CheckSum,
@@ -597,7 +629,7 @@ public class DynamicFormLabeledField : UserControl
         var optionsProperty = formField.ParentObject.GetType().GetProperties()
                                   .FirstOrDefault(x => x.Name == attributes.OptionsProperty)
                               ?? throw new InvalidOperationException(
-                                  $"Options property {attributes.OptionsProperty} for {formField.Attributes.LabelText} was not found");
+                                  $"Options property {attributes.OptionsProperty} for {formField.Attributes.Label} was not found");
 
         if (optionsProperty.GetValue(formField.ParentObject) is not ICollection<string> options)
         {

@@ -11,16 +11,24 @@ public partial class DynamicFormLabeledFieldVertical : DynamicFormLabeledField
         InitializeComponent();
 
         StackPanel.ToolTip = formField.Attributes.ToolTipText;
-        
-        if (string.IsNullOrEmpty(formField.Attributes.LabelText))
+
+        StackPanel.Children.Add(BodyControl);
+
+        if (formField.Attributes.LabelIsProperty)
         {
-            MainLabel.Visibility = Visibility.Collapsed;
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.Label);
+            var text = property?.GetValue(formField.ParentObject) as string ?? "";
+            SetLabelText(text);
         }
         else
         {
-            MainLabel.Text = formField.Attributes.LabelText;
+            SetLabelText(formField.Attributes.Label);
         }
+    }
 
-        StackPanel.Children.Add(BodyControl);
+    public override void SetLabelText(string text)
+    {
+        MainLabel.Visibility = !string.IsNullOrEmpty(text) ? Visibility.Visible : Visibility.Collapsed;
+        textBox.Text = text;
     }
 }

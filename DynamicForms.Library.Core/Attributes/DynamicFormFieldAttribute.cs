@@ -1,7 +1,8 @@
 namespace DynamicForms.Library.Core.Attributes;
 
 public abstract class DynamicFormFieldAttribute(
-    string labelText,
+    string label,
+    bool labelIsProperty,
     string? toolTipText = null,
     string? visibleWhenTrue = null,
     string? editableWhenTrue = null,
@@ -14,8 +15,10 @@ public abstract class DynamicFormFieldAttribute(
     
     public abstract ICollection<Type>? AllowedTypes { get; }
     
-    public string LabelText { get; } = labelText;
+    public string Label { get; } = label;
     public string? ToolTipText { get; } = toolTipText;
     public string? VisibleWhenTrue { get; } = visibleWhenTrue;
     public string? EditableWhenTrue { get; } = editableWhenTrue;
+
+    public bool LabelIsProperty => labelIsProperty;
 }

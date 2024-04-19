@@ -10,7 +10,6 @@ public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
     {
         InitializeComponent();
         
-        MainLabel.Content = formField.Attributes.LabelText;
         MainGrid.ToolTip = formField.Attributes.ToolTipText;
         
         if (formField.Type is DynamicFormFieldType.Button)
@@ -26,6 +25,22 @@ public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
         {
             MainContent.Content = BodyControl;
         }
+
+        if (formField.Attributes.LabelIsProperty)
+        {
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.Label);
+            var text = property?.GetValue(formField.ParentObject) as string ?? "";
+            SetLabelText(text);
+        }
+        else
+        {
+            SetLabelText(formField.Attributes.Label);
+        }
+    }
+
+    public override void SetLabelText(string text)
+    {
+        MainLabel.Content = text;
     }
     
 }

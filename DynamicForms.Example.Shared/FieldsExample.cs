@@ -10,11 +10,11 @@ public class FieldsExample
     [DynamicFormFieldTextBox("DynamicFormFieldTextBox")]
     public string? DynamicFormFieldTextBoxExample { get; set; }
 
-    [DynamicFormFieldText(labelText: "DynamicFormFieldText (label)")]
+    [DynamicFormFieldText(label: "DynamicFormFieldText (label)")]
     [YamlIgnore]
     public string DynamicFormFieldTextExample { get; set; } = "DynamicFormFieldText";
     
-    [DynamicFormFieldText(DynamicFormAlignment.Right, labelText: "DynamicFormFieldText (label)")]
+    [DynamicFormFieldText(DynamicFormAlignment.Right, label: "DynamicFormFieldText (label)")]
     [YamlIgnore]
     public string DynamicFormFieldTextRightAlignedExample { get; set; } = "Right Aligned Text";
     
@@ -22,36 +22,36 @@ public class FieldsExample
     public bool? DynamicFormFieldCheckBoxExample { get; set; }
 
     [DynamicFormFieldComboBox(comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxOptions), 
-        labelText: "DynamicFormFieldComboBox (string)")]
+        label: "DynamicFormFieldComboBox (string)")]
     public string? DynamicFormFieldComboBoxStringExample { get; set; }
     
     [DynamicFormFieldComboBox("DynamicFormFieldComboBox (enum)")]
     public EnumOptionExamples DynamicFormFieldComboBoxEnumExample { get; set; }
 
     [DynamicFormFieldComboBox(comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxDictionaryOptions),
-        labelText: "DynamicFormFieldComboBox (dictionary)")]
+        label: "DynamicFormFieldComboBox (dictionary)")]
     public string? DynamicFormFieldComboBoxDictionaryExample { get; set; } = "Value 2";
 
-    [DynamicFormFieldSlider(1, 10, labelText: "DynamicFormFieldSlider (int)")]
+    [DynamicFormFieldSlider(1, 10, label: "DynamicFormFieldSlider (int)")]
     public int? DynamicFormFieldSliderIntExample { get; set; } = 5;
 
     [DynamicFormFieldSlider(0, 100, decimalPlaces: 2, incrementAmount: 0.25, suffix: "%",
-        labelText: "DynamicFormFieldSlider (double)")]
+        label: "DynamicFormFieldSlider (double)")]
     public double? DynamicFormFieldDoubleSlider { get; set; } = 25.1;
     
     [DynamicFormFieldColorPicker("DynamicFormFieldColorPicker")]
     public byte[]? DynamicFormFieldColorPickerExample { get; set; }
     
-    [DynamicFormFieldFilePicker(FilePickerType.OpenFile, "Text Files (*.txt, *.log)|*.txt;*.log|All files (*.*)|*.*", dialogText: "Select text file", labelText: "DynamicFormFieldFilePicker (files)")]
+    [DynamicFormFieldFilePicker(FilePickerType.OpenFile, "Text Files (*.txt, *.log)|*.txt;*.log|All files (*.*)|*.*", dialogText: "Select text file", label: "DynamicFormFieldFilePicker (files)")]
     public string? DynamicFormFieldFilePickerFileExample { get; set; }
     
-    [DynamicFormFieldFilePicker(FilePickerType.Folder, dialogText: "Select folder", labelText: "DynamicFormFieldFilePicker (folder)")]
+    [DynamicFormFieldFilePicker(FilePickerType.Folder, dialogText: "Select folder", label: "DynamicFormFieldFilePicker (folder)")]
     public string? DynamicFormFieldFilePickerFolderExample { get; set; }
     
-    [DynamicFormFieldNumericUpDown(labelText: "DynamicFormFieldNumericUpDownExample")]
+    [DynamicFormFieldNumericUpDown(label: "DynamicFormFieldNumericUpDownExample")]
     public int? DynamicFormFieldNumericUpDownExample { get; set; }
     
-    [DynamicFormFieldNumericUpDown(increment: 0.1, labelText: "DynamicFormFieldNumericUpDownExample (decimal)")]
+    [DynamicFormFieldNumericUpDown(increment: 0.1, label: "DynamicFormFieldNumericUpDownExample (decimal)")]
     public decimal? DynamicFormFieldNumericUpDownExampleDouble { get; set; }
     
     [DynamicFormFieldEnableDisableReorder(nameof(DynamicFormFieldEnableDisableReorderOptions), "DynamicFormFieldEnableDisableReorder")]

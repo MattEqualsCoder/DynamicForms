@@ -21,7 +21,7 @@ public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
         InitializeComponent();
         
         var labeledControl = this.Find<LabeledControl>(nameof(MainControl))!;
-        labeledControl.Text = formField.Attributes.LabelText;
+        labeledControl.Text = formField.Attributes.Label;
         
         ToolTip.SetTip(labeledControl, formField.Attributes.ToolTipText);
 
@@ -39,5 +39,21 @@ public partial class DynamicFormLabeledFieldSideBySide : DynamicFormLabeledField
             labeledControl.Content = BodyControl;
         }
         
+        if (formField.Attributes.LabelIsProperty)
+        {
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.Label);
+            var text = property?.GetValue(formField.ParentObject) as string ?? "";
+            SetLabelText(text);
+        }
+        else
+        {
+            SetLabelText(formField.Attributes.Label);
+        }
+    }
+
+    public override void SetLabelText(string text)
+    {
+        var labeledControl = this.Find<LabeledControl>(nameof(MainControl))!;
+        labeledControl.Text = text;
     }
 }
