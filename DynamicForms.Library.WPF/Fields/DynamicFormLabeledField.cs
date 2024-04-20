@@ -627,7 +627,7 @@ public abstract class DynamicFormLabeledField : UserControl
         var optionsProperty = formField.ParentObject.GetType().GetProperties()
                                   .FirstOrDefault(x => x.Name == attributes.OptionsProperty)
                               ?? throw new InvalidOperationException(
-                                  $"Options property {attributes.OptionsProperty} for {formField.Attributes.LabelText} was not found");
+                                  $"Options property {attributes.OptionsProperty} for {formField.Attributes.Label} was not found");
 
         if (optionsProperty.GetValue(formField.ParentObject) is not ICollection<string> options)
         {

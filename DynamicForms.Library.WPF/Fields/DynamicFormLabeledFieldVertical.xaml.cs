@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using DynamicForms.Library.Core;
 
 namespace DynamicForms.Library.WPF.Fields;
@@ -29,6 +28,6 @@ public partial class DynamicFormLabeledFieldVertical : DynamicFormLabeledField
     public override void SetLabelText(string text)
     {
         MainLabel.Visibility = !string.IsNullOrEmpty(text) ? Visibility.Visible : Visibility.Collapsed;
-        textBox.Text = text;
+        MainLabel.Text = text;
     }
 }
