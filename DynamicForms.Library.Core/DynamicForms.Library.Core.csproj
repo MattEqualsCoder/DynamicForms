@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>MattEqualsCoder.DynamicForms.Core</PackageId>
-        <Version>0.0.3-beta.1</Version>
+        <Version>0.0.3-beta.2</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Title>Dynamic Forms Core</Title>
         <Description>Library to dynamically generate forms for user input based on attributes.</Description>

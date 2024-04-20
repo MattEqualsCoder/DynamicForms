@@ -6,6 +6,8 @@ using DynamicForms.Library.Core.Attributes;
 
 namespace DynamicForms.Example.Shared;
 
+[DynamicFormGroupBasic(DynamicFormLayout.Vertical, "Top")]
+[DynamicFormGroupGroupBox(DynamicFormLayout.Vertical, "Bottom", visibleWhenTrue: nameof(CheckBoxOne))]
 public class DependencyExample : INotifyPropertyChanged
 {
     private bool _checkBoxOne = true;
@@ -68,6 +70,9 @@ public class DependencyExample : INotifyPropertyChanged
 
     [DynamicFormFieldText(label: nameof(LabelTextBox), labelIsProperty: true)]
     public string LabelExample => "The label for this is dynamic";
+    
+    [DynamicFormFieldText(label: nameof(LabelTextBox), labelIsProperty: true, groupName: "Bottom")]
+    public string LabelExample2 => "The group is only visible when checked";
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -120,7 +120,6 @@ public class DynamicFormGroup : DynamicFormObject
                 } 
                 else if (item.Attributes is DynamicFormObjectAttribute subObjectAttribute)
                 {
-                    
                     if (propValue == null)
                     {
                         propValue = Activator.CreateInstance(property.PropertyType.GetUnderlyingType()) ?? throw new InvalidOperationException("DynamicFormGroups cannot be null");

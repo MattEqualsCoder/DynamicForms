@@ -5,6 +5,7 @@ public abstract class DynamicFormGroupAttribute(
     string name = "",
     string? parentGroup = null,
     int order = 1000,
+    string? visibleWhenTrue = null,
     DynamicFormPlatform platforms = DynamicFormPlatform.All) : Attribute
 {
     public abstract DynamicFormGroupStyle Style { get; }
@@ -13,4 +14,5 @@ public abstract class DynamicFormGroupAttribute(
     public string? ParentGroup => parentGroup;
     public int Order => order;
     public DynamicFormPlatform Platforms => platforms;
+    public string? VisibleWhenTrue => visibleWhenTrue;
 }
