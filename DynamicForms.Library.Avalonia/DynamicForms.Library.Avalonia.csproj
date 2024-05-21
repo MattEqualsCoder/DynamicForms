@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>MattEqualsCoder.DynamicForms.Avalonia</PackageId>
-        <Version>0.0.3-rc.2</Version>
+        <Version>0.0.3-rc.4</Version>
         <Authors>MattEqualsCoder</Authors>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="0.9.14" />
+      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="0.9.16" />
     </ItemGroup>
 
     <ItemGroup>
