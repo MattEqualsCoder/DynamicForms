@@ -6,7 +6,7 @@
         <UseWPF>true</UseWPF>
         <ImplicitUsings>enable</ImplicitUsings>
         <PackageId>MattEqualsCoder.DynamicForms.WPF</PackageId>
-        <Version>0.0.2</Version>
+        <Version>1.0.0</Version>
         <Title>Dynamic Forms WPF</Title>
         <Description>Library to dynamically generate forms for user input based on attributes.</Description>
         <PackageReadmeFile>README.md</PackageReadmeFile>
