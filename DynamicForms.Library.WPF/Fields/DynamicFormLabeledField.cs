@@ -10,7 +10,7 @@ using DynamicForms.Library.Core.Shared;
 
 namespace DynamicForms.Library.WPF.Fields;
 
-public class DynamicFormLabeledField : UserControl
+public abstract class DynamicFormLabeledField : UserControl
 {
     protected FrameworkElement BodyControl { get; private set; }
     
@@ -50,6 +50,35 @@ public class DynamicFormLabeledField : UserControl
                 break;
             default:
                 throw new InvalidOperationException("Unknown DynamicFormFieldType");
+        }
+
+        if (formField.Attributes.LabelIsProperty)
+        {
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.Label);
+
+            if (formField.ParentObject is INotifyPropertyChanged notifyParent)
+            {
+                notifyParent.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName != formField.Attributes.Label)
+                    {
+                        return;
+                    }
+                    
+                    if (CheckAccess())
+                    {
+                        SetLabelText(property!.GetValue(formField.ParentObject) as string ?? "");
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            SetLabelText(property!.GetValue(formField.ParentObject) as string ?? "");
+                        });
+                    }
+                };
+
+            }
         }
         
         if (!string.IsNullOrEmpty(formField.Attributes.VisibleWhenTrue))
@@ -147,6 +176,8 @@ public class DynamicFormLabeledField : UserControl
 
         return control;
     }
+    
+    public abstract void SetLabelText(string text);
     
     private TextBlock GetTextBlock(DynamicFormField formField)
     {
@@ -596,7 +627,7 @@ public class DynamicFormLabeledField : UserControl
         var optionsProperty = formField.ParentObject.GetType().GetProperties()
                                   .FirstOrDefault(x => x.Name == attributes.OptionsProperty)
                               ?? throw new InvalidOperationException(
-                                  $"Options property {attributes.OptionsProperty} for {formField.Attributes.LabelText} was not found");
+                                  $"Options property {attributes.OptionsProperty} for {formField.Attributes.Label} was not found");
 
         if (optionsProperty.GetValue(formField.ParentObject) is not ICollection<string> options)
         {

@@ -15,7 +15,8 @@ public class DynamicFormGroupExpanderAttribute(
     bool isExpanded = false,
     string? parentGroup = null,
     int order = 1000,
-    DynamicFormPlatform platforms = DynamicFormPlatform.All) : DynamicFormGroupAttribute(layout, name, parentGroup, order, platforms)
+    string? visibleWhenTrue = null,
+    DynamicFormPlatform platforms = DynamicFormPlatform.All) : DynamicFormGroupAttribute(layout, name, parentGroup, order, visibleWhenTrue, platforms)
 {
     public override DynamicFormGroupStyle Style => DynamicFormGroupStyle.Expander;
 

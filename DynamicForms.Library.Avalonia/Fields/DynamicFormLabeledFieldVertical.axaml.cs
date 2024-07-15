@@ -18,17 +18,26 @@ public partial class DynamicFormLabeledFieldVertical : DynamicFormLabeledField
     {
         InitializeComponent();
         
-        if (string.IsNullOrEmpty(formField.Attributes.LabelText))
-        {
-            this.Find<TextBlock>(nameof(MainLabel))!.IsVisible = false;
-        }
-        else
-        {
-            this.Find<TextBlock>(nameof(MainLabel))!.Text = formField.Attributes.LabelText;
-        }
-        
         var mainPanel = this.Find<StackPanel>(nameof(StackPanel))!;
         mainPanel.Children.Add(BodyControl);
         ToolTip.SetTip(mainPanel, formField.Attributes.ToolTipText);
+        
+        if (formField.Attributes.LabelIsProperty)
+        {
+            var property = formField.ParentObject.GetType().GetProperty(formField.Attributes.Label);
+            var text = property?.GetValue(formField.ParentObject) as string ?? "";
+            SetLabelText(text);
+        }
+        else
+        {
+            SetLabelText(formField.Attributes.Label);
+        }
+    }
+
+    public override void SetLabelText(string text)
+    {
+        var textBox = this.Find<TextBlock>(nameof(MainLabel))!;
+        textBox.IsVisible = !string.IsNullOrEmpty(text);
+        textBox.Text = text;
     }
 }

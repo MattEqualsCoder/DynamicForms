@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using DynamicForms.Library.Core;
@@ -97,6 +98,33 @@ public partial class DynamicFormControl : UserControl
                 {
                     subGroupControl.Margin = new Thickness(0, 0, 0, 5);
                 }
+                
+                if (!string.IsNullOrEmpty(group.Attributes?.VisibleWhenTrue) && group.Value is INotifyPropertyChanged notifyParent)
+                {
+                    var property = group.Value.GetType().GetProperty(group.Attributes.VisibleWhenTrue);
+                    subGroupControl.Visibility = (bool?)property?.GetValue(group.Value) != false ? Visibility.Visible : Visibility.Collapsed;
+
+                    notifyParent.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName != group.Attributes.VisibleWhenTrue)
+                        {
+                            return;
+                        }
+
+                        if (Dispatcher.CheckAccess())
+                        {
+                            subGroupControl.Visibility = (bool?)property?.GetValue(group.Value) != false ? Visibility.Visible : Visibility.Collapsed;  
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                subGroupControl.Visibility = (bool?)property?.GetValue(group.Value) != false ? Visibility.Visible : Visibility.Collapsed;
+                            });
+                        }
+                    };
+                }
+                
                 groupLayoutControl.AddControl(subGroupControl);
             }
             else

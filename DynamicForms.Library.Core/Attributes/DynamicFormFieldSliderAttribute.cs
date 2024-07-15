@@ -8,7 +8,8 @@ namespace DynamicForms.Library.Core.Attributes;
 /// <param name="decimalPlaces">Number to round the decimal value</param>
 /// <param name="incrementAmount">Value to increment/decrement the value by</param>
 /// <param name="suffix">The suffix to display after the number in the text block</param>
-/// <param name="labelText">The form label text</param>
+/// <param name="label">The form label text</param>
+/// <param name="labelIsProperty">If the label is a property instead of text</param>
 /// <param name="toolTipText">Text to display when hovering over the object</param>
 /// <param name="visibleWhenTrue">Property to look at to determine if the field should be shown or not</param>
 /// <param name="editableWhenTrue">Property to look at to determine if the field should be editable or not</param>
@@ -22,14 +23,15 @@ public class DynamicFormFieldSliderAttribute(
     int decimalPlaces = 1,
     double incrementAmount = -1,
     string suffix = "",
-    string labelText = "",
+    string label = "",
+    bool labelIsProperty = false,
     string? toolTipText = null,
     string? visibleWhenTrue = null,
     string? editableWhenTrue = null,
     string groupName = "",
     int order = int.MaxValue,
     DynamicFormPlatform platforms = DynamicFormPlatform.All)
-    : DynamicFormFieldAttribute(labelText, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order, platforms)
+    : DynamicFormFieldAttribute(label, labelIsProperty, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order, platforms)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.Slider;
     public override ICollection<Type> AllowedTypes => [typeof(int), typeof(double), typeof(float), typeof(decimal)];

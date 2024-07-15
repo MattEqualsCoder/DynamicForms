@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using DynamicForms.Library.Avalonia.Groups;
 using DynamicForms.Library.Core;
 using DynamicForms.Library.Core.Attributes;
@@ -92,6 +94,33 @@ public partial class DynamicFormControl : UserControl
                 {
                     subGroupControl.Margin = new Thickness(0, 0, 0, 5);
                 }
+
+                if (!string.IsNullOrEmpty(group.Attributes?.VisibleWhenTrue) && group.Value is INotifyPropertyChanged notifyParent)
+                {
+                    var property = group.Value.GetType().GetProperty(group.Attributes.VisibleWhenTrue);
+                    subGroupControl.IsVisible = (bool?)property?.GetValue(group.Value) != false;
+
+                    notifyParent.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName != group.Attributes.VisibleWhenTrue)
+                        {
+                            return;
+                        }
+
+                        if (Dispatcher.UIThread.CheckAccess())
+                        {
+                            subGroupControl.IsVisible = (bool?)property?.GetValue(group.Value) != false;    
+                        }
+                        else
+                        {
+                            Dispatcher.UIThread.Invoke(() =>
+                            {
+                                subGroupControl.IsVisible = (bool?)property?.GetValue(group.Value) != false;
+                            });
+                        }
+                    };
+                }
+                
                 groupLayoutControl.AddControl(subGroupControl);
             }
             else
