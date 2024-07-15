@@ -9,7 +9,12 @@ public partial class DynamicFormDictionaryComboBox : UserControl
 {
     private ComboBox _comboBox;
     private Dictionary<string, string> _items;
-    
+
+    public DynamicFormDictionaryComboBox() : this("", [])
+    {
+
+    }
+
     public DynamicFormDictionaryComboBox(string? value, Dictionary<string, string> items)
     {
         _items = items;
