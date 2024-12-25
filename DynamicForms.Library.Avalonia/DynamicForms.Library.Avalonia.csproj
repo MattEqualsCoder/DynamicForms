@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>MattEqualsCoder.DynamicForms.Avalonia</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.1.0</Version>
         <Authors>MattEqualsCoder</Authors>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <RepositoryUrl>https://github.com/MattEqualsCoder/DynamicForms</RepositoryUrl>
         <Title>Dynamic Forms Avalonia</Title>
         <Description>Library to dynamically generate forms for user input based on attributes.</Description>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="1.3.1" />
+      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="1.5.0" />
     </ItemGroup>
 
     <ItemGroup>

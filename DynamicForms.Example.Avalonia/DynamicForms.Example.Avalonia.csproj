@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+        <Version>1.1.0</Version>
     </PropertyGroup>
 
 
@@ -16,6 +17,6 @@
 
 
     <ItemGroup>
-      <PackageReference Include="YamlDotNet" Version="15.1.2" />
+      <PackageReference Include="YamlDotNet" Version="16.3.0" />
     </ItemGroup>
 </Project>
