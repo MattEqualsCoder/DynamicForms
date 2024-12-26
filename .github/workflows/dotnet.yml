@@ -26,7 +26,7 @@ jobs:
       run: dotnet build DynamicForms.Library.Avalonia/DynamicForms.Library.Avalonia.csproj
     - name: Build WPF version
       if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet bulid DynamicForms.Library.WPF/DynamicForms.Library.WPF.csproj
+      run: dotnet build DynamicForms.Library.WPF/DynamicForms.Library.WPF.csproj
     - name: Get version number
       if: ${{ github.event_name != 'pull_request' }}
       id: version
