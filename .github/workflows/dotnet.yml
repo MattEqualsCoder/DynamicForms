@@ -53,4 +53,4 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       with:
         path: "Output/*"
-        name: SDynamicForms_${{ steps.version.outputs.number }}
+        name: DynamicForms_${{ steps.version.outputs.number }}
