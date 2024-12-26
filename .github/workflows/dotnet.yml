@@ -31,7 +31,8 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       id: version
       run: |
-        $version = (Get-Item DynamicForms.Library.Avalonia/bin/Release/net9.0/DynamicForms.Library.Core.dll").VersionInfo.ProductVersion
+        $version = (Get-Item DynamicForms.Library.Core\bin\Debug\net8.0\DynamicForms.Library.Core.dll").VersionInfo.ProductVersion
+        Write-Host $version
         $version = $version -replace "\+.*", ""
         Write-Output "number=$version" >> $env:GITHUB_OUTPUT
       shell: pwsh
