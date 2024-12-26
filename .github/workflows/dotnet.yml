@@ -23,10 +23,10 @@ jobs:
       run: dotnet build --no-restore  --configuration Release -p:PostBuildEvent= 
     - name: Build Avalonia version
       if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet build DynamicForms.Library.Avalonia/DynamicForms.Library.Avalonia.csproj
+      run: DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj
     - name: Build WPF version
       if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet build DynamicForms.Library.WPF/DynamicForms.Library.WPF.csproj
+      run: DynamicForms.Example.WPF/DynamicForms.Example.WPF.csproj
     - name: Get version number
       if: ${{ github.event_name != 'pull_request' }}
       id: version
@@ -44,6 +44,7 @@ jobs:
         New-Item -ItemType Directory -Force -Path $outputDir
         Copy-Item -Path DynamicForms.Library.Avalonia\bin\Release\*.nupkg -Destination $outputDir
         Copy-Item -Path DynamicForms.Library.WPF\bin\Release\*.nupkg -Destination $outputDir
+        Copy-Item -Path DynamicForms.Library.Core\bin\Release\*.nupkg -Destination $outputDir
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       if: ${{ github.event_name != 'pull_request' }}

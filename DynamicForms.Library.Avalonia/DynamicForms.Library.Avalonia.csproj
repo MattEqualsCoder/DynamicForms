@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="1.5.0" />
+      <PackageReference Include="MattEqualsCoder.AvaloniaControls" Version="1.5.1" />
     </ItemGroup>
 
     <ItemGroup>
