@@ -29,7 +29,7 @@ jobs:
       run: dotnet publish --os win --arch x64 -c Release -f net9.0 --self-contained false DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj
     - name: Build WPF version
       if: ${{ github.event_name != 'pull_request' }}
-      run: dotnet publish --os win --arch x64 -c Release -f net9.0 --self-contained false DynamicForms.Example.WPF/DynamicForms.Example.WPF.csproj
+      run: dotnet publish --os win --arch x64 -c Release -f net9.0-windows --self-contained false DynamicForms.Example.WPF/DynamicForms.Example.WPF.csproj
     - name: Get version number
       if: ${{ github.event_name != 'pull_request' }}
       id: version
