@@ -21,12 +21,15 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore  --configuration Release -p:PostBuildEvent= 
+    - name: Build Shared version
+      if: ${{ github.event_name != 'pull_request' }}
+      run: dotnet publish --os win --arch x64 -c Release -f net9.0 --self-contained false DynamicForms.Example.Shared/DynamicForms.Example.Shared.csproj
     - name: Build Avalonia version
       if: ${{ github.event_name != 'pull_request' }}
-      run: DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj
+      run: dotnet publish --os win --arch x64 -c Release -f net9.0 --self-contained false DynamicForms.Example.Avalonia/DynamicForms.Example.Avalonia.csproj
     - name: Build WPF version
       if: ${{ github.event_name != 'pull_request' }}
-      run: DynamicForms.Example.WPF/DynamicForms.Example.WPF.csproj
+      run: dotnet publish --os win --arch x64 -c Release -f net9.0 --self-contained false DynamicForms.Example.WPF/DynamicForms.Example.WPF.csproj
     - name: Get version number
       if: ${{ github.event_name != 'pull_request' }}
       id: version
