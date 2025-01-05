@@ -6,7 +6,7 @@
         xmlns:avalonia="clr-namespace:DynamicForms.Library.Avalonia;assembly=DynamicForms.Library.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DynamicForms.Example.Avalonia.MainWindow"
-        Width="800" Height="800"
+        Width="800" Height="1000"
         Title="DynamicForms.Example.Avalonia"
         x:DataType="viewModels:MainWindowViewModel">
     <DockPanel>

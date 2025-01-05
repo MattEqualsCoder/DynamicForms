@@ -645,35 +645,31 @@ public abstract class DynamicFormLabeledField : UserControl
         {
             notifyPropertyChanged.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == formField.PropertyName)
+                if (CheckAccess())
                 {
-                    if (CheckAccess())
+                    if (args.PropertyName == formField.PropertyName)
                     {
                         control.SetValue(formField.GetValue(formField.ParentObject) as ICollection<string> ?? []);    
                     }
                     else
                     {
-                        Dispatcher.Invoke(() =>
-                        {
-                            control.SetValue(formField.GetValue(formField.ParentObject) as ICollection<string> ?? []);
-                        });
-                    }
-                }
-                else if (args.PropertyName == attributes.OptionsProperty)
-                {
-                    if (CheckAccess())
-                    {
                         control.SetOptions(optionsProperty.GetValue(formField.ParentObject) as ICollection<string> ?? []);
                     }
-                    else
+                }
+                else
+                {
+                    Dispatcher.Invoke(() =>
                     {
-                        Dispatcher.Invoke(() =>
+                        if (args.PropertyName == formField.PropertyName)
+                        {
+                            control.SetValue(formField.GetValue(formField.ParentObject) as ICollection<string> ?? []);    
+                        }
+                        else
                         {
                             control.SetOptions(optionsProperty.GetValue(formField.ParentObject) as ICollection<string> ?? []);
-                        });
-                    }
+                        }
+                    });
                 }
-                
             };
         }
 

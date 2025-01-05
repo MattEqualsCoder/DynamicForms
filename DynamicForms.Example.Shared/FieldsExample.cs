@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using DynamicForms.Library.Core;
 using DynamicForms.Library.Core.Attributes;
 using YamlDotNet.Serialization;
@@ -5,7 +7,7 @@ using YamlDotNet.Serialization;
 namespace DynamicForms.Example.Shared;
 
 [DynamicFormGroupBasic(DynamicFormLayout.SideBySide)]
-public class FieldsExample
+public class FieldsExample : INotifyPropertyChanged
 {
     [DynamicFormFieldTextBox("DynamicFormFieldTextBox")]
     public string? DynamicFormFieldTextBoxExample { get; set; }
@@ -56,9 +58,12 @@ public class FieldsExample
     
     [DynamicFormFieldEnableDisableReorder(nameof(DynamicFormFieldEnableDisableReorderOptions), "DynamicFormFieldEnableDisableReorder")]
     public string[]? DynamicFormFieldEnableDisableReorderExample { get; set; }
+
+#pragma warning disable CS0067 // Event is never used
+    [DynamicFormFieldButton("Refresh Reorder Box")] 
+    public event EventHandler? RefreshReorderBox;
     
     [DynamicFormFieldButton("View YAML")] 
-#pragma warning disable CS0067 // Event is never used
     public event EventHandler? ButtonPress;
 #pragma warning restore CS0067 // Event is never used
 
@@ -73,6 +78,27 @@ public class FieldsExample
             { "Value 3", "Display 3" },
         };
 
+    private string[] _dynamicFormFieldEnableDisableReorderOptions = ["One", "Two", "Three", "Four", "Five"];
+    
     [YamlIgnore]
-    public string[] DynamicFormFieldEnableDisableReorderOptions => ["One", "Two", "Three", "Four", "Five"];
+    public string[] DynamicFormFieldEnableDisableReorderOptions
+    {
+        get => _dynamicFormFieldEnableDisableReorderOptions;
+        set => SetField(ref _dynamicFormFieldEnableDisableReorderOptions, value);
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+        field = value;
+        OnPropertyChanged(propertyName);
+        return true;
+    }
 }
