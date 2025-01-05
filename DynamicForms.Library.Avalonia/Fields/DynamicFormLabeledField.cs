@@ -655,7 +655,7 @@ public abstract class DynamicFormLabeledField : UserControl
                     }
                     else
                     {
-                        control.SetOptions(formField.GetValue(attributes.OptionsProperty) as ICollection<string> ?? []);
+                        control.SetOptions(optionsProperty.GetValue(formField.ParentObject) as ICollection<string> ?? []);
                     }
                 }
                 else
@@ -668,7 +668,7 @@ public abstract class DynamicFormLabeledField : UserControl
                         }
                         else
                         {
-                            control.SetOptions(formField.GetValue(attributes.OptionsProperty) as ICollection<string> ?? []);
+                            control.SetOptions(optionsProperty.GetValue(formField.ParentObject) as ICollection<string> ?? []);
                         }
                     });
                 }

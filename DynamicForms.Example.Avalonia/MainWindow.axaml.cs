@@ -27,5 +27,10 @@ public partial class MainWindow : Window
         {
             this.Find<TextBox>(nameof(FieldsTextBox))!.Text = _serializer.Serialize(_viewModel.FieldsExample);
         };
+
+        _viewModel.FieldsExample.RefreshReorderBox += (sender, args) =>
+        {
+            _viewModel.FieldsExample.DynamicFormFieldEnableDisableReorderOptions = ["Test1", "Test2"];
+        };
     }
 }
