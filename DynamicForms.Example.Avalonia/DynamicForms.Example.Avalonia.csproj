@@ -6,7 +6,7 @@
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-        <Version>1.1.1</Version>
+        <Version>1.0/Version>
     </PropertyGroup>
 
 
