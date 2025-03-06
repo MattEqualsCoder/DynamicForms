@@ -41,6 +41,9 @@ public class FieldsExample : INotifyPropertyChanged
         label: "DynamicFormFieldSlider (double)")]
     public double? DynamicFormFieldDoubleSlider { get; set; } = 25.1;
     
+    [DynamicFormFieldSlider(0, 11, label: "DynamicFormFieldSlider (value display labels)", minimumValueLabel: "Minimum Value", maximumValueLabel: "Maximum Value", valueDisplayWidth: 100)]
+    public int? DynamicFormFieldSliderLabelExample { get; set; } = 5;
+    
     [DynamicFormFieldColorPicker("DynamicFormFieldColorPicker")]
     public byte[]? DynamicFormFieldColorPickerExample { get; set; }
     

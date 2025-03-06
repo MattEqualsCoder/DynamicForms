@@ -429,7 +429,7 @@ public abstract class DynamicFormLabeledField : UserControl
             incrementAmount = Math.Pow(0.1, decimalPlaces);
         }
         
-        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix, underlyingType);
+        var control = new DynamicFormSliderControl(formField.Value ?? attributes.MinimumValue, attributes.MaximumValue, attributes.MinimumValue, incrementAmount, decimalPlaces, attributes.Suffix, underlyingType, attributes.MaximumValueLabel, attributes.MinimumValueLabel, attributes.ValueDisplayWidth);
         
         control.ValueChanged += (sender, args) =>
         {

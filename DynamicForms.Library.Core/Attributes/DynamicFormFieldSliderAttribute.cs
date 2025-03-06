@@ -30,7 +30,10 @@ public class DynamicFormFieldSliderAttribute(
     string? editableWhenTrue = null,
     string groupName = "",
     int order = int.MaxValue,
-    DynamicFormPlatform platforms = DynamicFormPlatform.All)
+    DynamicFormPlatform platforms = DynamicFormPlatform.All,
+    string? minimumValueLabel = null,
+    string? maximumValueLabel = null,
+    int valueDisplayWidth = 50)
     : DynamicFormFieldAttribute(label, labelIsProperty, toolTipText, visibleWhenTrue, editableWhenTrue, groupName, order, platforms)
 {
     public override DynamicFormFieldType FieldType => DynamicFormFieldType.Slider;
@@ -41,5 +44,7 @@ public class DynamicFormFieldSliderAttribute(
     public double IncrementAmount { get; } = incrementAmount;
     public int DecimalPlaces { get; } = decimalPlaces;
     public string Suffix { get; } = suffix;
-
+    public string? MinimumValueLabel { get; } = minimumValueLabel;
+    public string? MaximumValueLabel { get; } = maximumValueLabel;
+    public int ValueDisplayWidth { get; } = valueDisplayWidth;
 }
