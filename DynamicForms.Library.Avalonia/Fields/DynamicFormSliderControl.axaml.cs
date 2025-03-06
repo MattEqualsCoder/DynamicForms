@@ -13,19 +13,23 @@ public partial class DynamicFormSliderControl : UserControl
     private bool _isDecimal;
     private bool _isFloat;
     private Slider _slider;
+    private string? _minimumValueLabel;
+    private string? _maximumValueLabel;
 
-    public DynamicFormSliderControl() : this(0, 0, 0, 0, 0, "", typeof(double))
+    public DynamicFormSliderControl() : this(0, 0, 0, 0, 0, "", typeof(double), null, null, 50)
     {
         
     }
     
-    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix, Type type)
+    public DynamicFormSliderControl(object currentValue, double maximum, double minimum, double incrementAmount, int decimalPlaces, string suffix, Type type, string? maximumValueLabel, string? minimumValueLabel, int valueDisplayWidth = 50)
     {
         _suffix = suffix;
 
         _isInt = type == typeof(int);
         _isDecimal = type == typeof(decimal);
         _isFloat = type == typeof(float);
+        _minimumValueLabel = minimumValueLabel;
+        _maximumValueLabel = maximumValueLabel;
         
         InitializeComponent();
         
@@ -34,22 +38,23 @@ public partial class DynamicFormSliderControl : UserControl
         _slider.Minimum = minimum;
         _slider.TickFrequency = incrementAmount;
         _slider.Value = Convert.ToDouble(currentValue);
+        
+        this.Find<TextBlock>(nameof(ValueTextBox))!.Width = valueDisplayWidth;
 
-        var textBox = this.Find<TextBlock>(nameof(ValueTextBox))!;
-        textBox.Text = _slider.Value.ToString(CultureInfo.CurrentCulture) + _suffix;
+        UpdateTextBox(_slider.Value);
 
         _slider.ValueChanged += (sender, args) =>
         {
             if (decimalPlaces == 0)
             {
                 var value = Convert.ToInt32(args.NewValue);
-                textBox.Text = value.ToString(CultureInfo.CurrentCulture) + _suffix;
+                UpdateTextBox(value);
                 ValueChanged?.Invoke(sender, args);
             }
             else
             {
                 var value = Math.Round(args.NewValue, decimalPlaces);
-                textBox.Text = value.ToString(CultureInfo.CurrentCulture) + _suffix;
+                UpdateTextBox(value);
                 ValueChanged?.Invoke(sender, args);
             }
         };
@@ -58,8 +63,7 @@ public partial class DynamicFormSliderControl : UserControl
     public void SetValue(double value)
     {
         this.Find<Slider>(nameof(ValueSlider))!.Value = value;
-        this.Find<TextBlock>(nameof(ValueTextBox))!.Text =
-            value.ToString(CultureInfo.CurrentCulture) + _suffix;
+        UpdateTextBox(value);
     }
     
     public object GetValue()
@@ -78,6 +82,23 @@ public partial class DynamicFormSliderControl : UserControl
         }
 
         return _slider.Value;
+    }
+
+    private void UpdateTextBox(double value)
+    {
+        if (!string.IsNullOrEmpty(_minimumValueLabel) && value <= _slider.Minimum)
+        {
+            this.Find<TextBlock>(nameof(ValueTextBox))!.Text = _minimumValueLabel;
+        }
+        else if (!string.IsNullOrEmpty(_maximumValueLabel) && value >= _slider.Maximum)
+        {
+            this.Find<TextBlock>(nameof(ValueTextBox))!.Text = _maximumValueLabel;
+        }
+        else
+        {
+            this.Find<TextBlock>(nameof(ValueTextBox))!.Text =
+                value.ToString(CultureInfo.CurrentCulture) + _suffix;
+        }
     }
 
     public event EventHandler<RangeBaseValueChangedEventArgs>? ValueChanged;
