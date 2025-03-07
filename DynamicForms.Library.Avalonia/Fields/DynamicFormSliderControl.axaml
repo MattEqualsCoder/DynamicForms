@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DynamicForms.Library.Avalonia.Fields.DynamicFormSliderControl">
-    <Grid ColumnDefinitions="Auto, *">
-        <TextBlock Grid.Column="0" Name="ValueTextBox" Width="50" TextAlignment="Center"></TextBlock>
+    <Grid ColumnDefinitions="Auto, *" Margin="0 1 0 0">
+        <TextBlock Grid.Column="0" Name="ValueTextBox" Width="50" TextAlignment="Center" Padding="0 4"></TextBlock>
         <Slider Grid.Column="1" Name="ValueSlider" IsSnapToTickEnabled="True"></Slider>
     </Grid>
 </UserControl>
