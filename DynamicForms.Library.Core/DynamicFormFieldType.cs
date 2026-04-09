@@ -11,5 +11,6 @@ public enum DynamicFormFieldType
     FilePicker,
     NumericUpDown,
     EnableDisableReorderList,
-    Button
+    Button,
+    BoolComboBox
 }

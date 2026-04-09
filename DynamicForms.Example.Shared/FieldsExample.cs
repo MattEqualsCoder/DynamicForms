@@ -22,12 +22,18 @@ public class FieldsExample : INotifyPropertyChanged
     
     [DynamicFormFieldCheckBox("DynamicFormCheckBox", DynamicFormAlignment.Right,"DynamicFormCheckBox (label)")]
     public bool? DynamicFormFieldCheckBoxExample { get; set; }
+    
+    [DynamicFormFieldBoolComboBox("DynamicFormFieldYesNoComboBox (bool)")]
+    public bool DynamicFormFieldBoolComboBoxExample1 { get; set; }
+    
+    [DynamicFormFieldBoolComboBox("DynamicFormFieldYesNoComboBox (bool?)", allowNull: true, trueText: "True", falseText: "False", nullText: "Null")]
+    public bool? DynamicFormFieldBoolComboBoxExample2 { get; set; }
 
     [DynamicFormFieldComboBox(comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxOptions), 
         label: "DynamicFormFieldComboBox (string)")]
     public string? DynamicFormFieldComboBoxStringExample { get; set; }
     
-    [DynamicFormFieldComboBox("DynamicFormFieldComboBox (enum)")]
+    [DynamicFormFieldComboBox(label: "DynamicFormFieldComboBox (enum)")]
     public EnumOptionExamples DynamicFormFieldComboBoxEnumExample { get; set; }
 
     [DynamicFormFieldComboBox(comboBoxOptionsProperty: nameof(DynamicFormFieldComboBoxDictionaryOptions),

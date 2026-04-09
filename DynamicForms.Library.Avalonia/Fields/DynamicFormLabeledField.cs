@@ -35,6 +35,9 @@ public abstract class DynamicFormLabeledField : UserControl
             case DynamicFormFieldType.ComboBox:
                 BodyControl = GetComboBox(formField);
                 break;
+            case DynamicFormFieldType.BoolComboBox:
+                BodyControl = GetComboBox(formField);
+                break;
             case DynamicFormFieldType.Slider:
                 BodyControl = GetSlider(formField);
                 break;
@@ -403,12 +406,50 @@ public abstract class DynamicFormLabeledField : UserControl
                 throw new InvalidOperationException("Invalid type for ComboBox");
             }
         }
+        else if (formField.Attributes is DynamicFormFieldBoolComboBoxAttribute boolComboBoxAttributes)
+        {
+            var control = new ComboBox()
+            {
+                ItemsSource = boolComboBoxAttributes.GetComboBoxOptions(),
+                SelectedItem = boolComboBoxAttributes.GetSelectedOption(formField.Value as bool?),
+            };
+                
+            control.SelectionChanged += (sender, args) =>
+            {
+                formField.SetValue(formField.ParentObject, boolComboBoxAttributes.GetSelectedValue(control.SelectedItem as string));
+            };
+        
+            if (formField.ParentObject is INotifyPropertyChanged notifyPropertyChanged)
+            {
+                notifyPropertyChanged.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName != formField.PropertyName)
+                    {
+                        return;
+                    }
+
+                    if (Dispatcher.UIThread.CheckAccess())
+                    {
+                        control.SelectedItem = boolComboBoxAttributes.GetSelectedOption(formField.GetValue(formField.ParentObject) as bool?);
+                    }
+                    else
+                    {
+                        Dispatcher.UIThread.Invoke(() =>
+                        {
+                            control.SelectedItem = boolComboBoxAttributes.GetSelectedOption(formField.GetValue(formField.ParentObject) as bool?);
+                        });
+                    }
+                };
+            }
+
+            return control;
+        }
         else
         {
             throw new InvalidOperationException("Invalid DynamicFormField object for ComboBox");
         }
     }
-
+    
     private Control GetSlider(DynamicFormField formField)
     {
         if (formField.Attributes is not DynamicFormFieldSliderAttribute attributes)
